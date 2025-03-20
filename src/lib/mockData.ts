@@ -87,7 +87,7 @@ export const institutions: Institution[] = [
     coursesOffered: ['Architecture and Sustainable Design', 'Engineering Product Development', 'Information Systems Technology and Design', 'Engineering Systems and Design'],
     coCurricularActivities: ['Design Innovation', 'Sports', 'Arts', 'Entrepreneurship'],
     specialPrograms: ['SUTD-MIT Dual Masters', 'SUTD Technology Entrepreneurship Programme', 'SUTD-ZJU Innovation, Design and Entrepreneurship Alliance'],
-    description: 'Singapore University of Technology and Design (SUTD) is Singapore's fourth public university. SUTD was established in collaboration with MIT to advance knowledge and nurture technically grounded leaders and innovators to serve societal needs.',
+    description: 'Singapore University of Technology and Design (SUTD) is Singapore\'s fourth public university. SUTD was established in collaboration with MIT to advance knowledge and nurture technically grounded leaders and innovators to serve societal needs.',
     imageUrl: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1000&auto=format&fit=crop'
   },
   {
@@ -128,8 +128,8 @@ export const institutions: Institution[] = [
     entryRequirements: ['PSLE', 'Direct School Admission'],
     coursesOffered: ['Secondary Education', 'Integrated Programme'],
     coCurricularActivities: ['Sports', 'Arts', 'Clubs', 'Leadership'],
-    specialPrograms: ['Raffles Leadership Programme', 'Raffles Girls' Talent Development', 'RGS Centre for Pedagogical Research and Learning'],
-    description: 'Raffles Girls' School (Secondary) is an independent girls' school in Singapore. It offers a six-year Integrated Programme leading to the GCE A-Level examination in collaboration with Raffles Institution.',
+    specialPrograms: ['Raffles Leadership Programme', 'Raffles Girls\' Talent Development', 'RGS Centre for Pedagogical Research and Learning'],
+    description: 'Raffles Girls\' School (Secondary) is an independent girls\' school in Singapore. It offers a six-year Integrated Programme leading to the GCE A-Level examination in collaboration with Raffles Institution.',
     imageUrl: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1000&auto=format&fit=crop'
   },
   {
@@ -143,7 +143,7 @@ export const institutions: Institution[] = [
     coursesOffered: ['International Baccalaureate Diploma Programme', 'Integrated Programme'],
     coCurricularActivities: ['Sports', 'Performing Arts', 'Uniformed Groups', 'Clubs & Societies'],
     specialPrograms: ['ACSian Theatre & The Arts', 'Regional Studies Programme', 'Science & Mathematics Talent Programme'],
-    description: 'Anglo-Chinese School (Independent) is an autonomous Methodist boys' school in Singapore. It offers the four-year Singapore-Cambridge GCE Ordinary Level Programme and the six-year Integrated Programme leading to the International Baccalaureate Diploma.',
+    description: 'Anglo-Chinese School (Independent) is an autonomous Methodist boys\' school in Singapore. It offers the four-year Singapore-Cambridge GCE Ordinary Level Programme and the six-year Integrated Programme leading to the International Baccalaureate Diploma.',
     imageUrl: 'https://images.unsplash.com/photo-1592280771190-3e2e4d977758?q=80&w=1000&auto=format&fit=crop'
   }
 ];
