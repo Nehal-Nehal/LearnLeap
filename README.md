@@ -1,4 +1,69 @@
 
+# LearnLeap - Educational Institution Search System
+
+LearnLeap is a comprehensive search system for educational institutions in Singapore, designed to help students and parents discover schools, colleges, and universities that meet their specific requirements.
+
+## Project Structure
+
+This project is organized into two main directories:
+- `/frontend` - React.js application
+- `/backend` - Python API (placeholder structure for future implementation)
+
+## Frontend (React)
+
+The frontend is built with:
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
+- Firebase Authentication (Google Sign-in)
+
+### Running the Frontend
+
+```sh
+# Navigate to the frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+## Backend (Python)
+
+The backend API is built with Python and is set up to integrate with data.gov.sg for educational institution data.
+
+### Setup Backend (Future Implementation)
+
+```sh
+# Navigate to the backend directory
+cd backend
+
+# Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the API server
+python app.py
+```
+
+## Authentication
+
+The application uses Firebase Authentication for Google Sign-in. Users can sign in with their Google accounts to access personalized features.
+
+## Features
+
+- Comprehensive search for educational institutions in Singapore
+- Filtering by institution type, location, and other criteria
+- Interactive map view of institution locations
+- Institution registration system
+- User authentication via Google
 
 ## Project info
 
@@ -49,16 +114,6 @@ npm run dev
 - Select the "Codespaces" tab.
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
 
 ## How can I deploy this project?
 
