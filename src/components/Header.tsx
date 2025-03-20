@@ -13,11 +13,6 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       className
     )}>
       <div className="flex items-center space-x-2">
-        <img 
-          src="/lovable-uploads/learnleap-logo.png" 
-          alt="LearnLeap Logo" 
-          className="h-10 w-auto" 
-        />
         <div className="flex flex-col">
           <h1 className="text-xl font-semibold tracking-tight">LearnLeap</h1>
           <p className="text-xs text-muted-foreground">DISCOVER, LEARN, GROW</p>
@@ -41,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       
       <div className="flex items-center space-x-4">
         <button className="relative inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-          Sign In
+          Sign In with Google
         </button>
       </div>
     </header>
