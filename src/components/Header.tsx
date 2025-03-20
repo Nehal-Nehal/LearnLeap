@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { GraduationCap } from 'lucide-react';
 
 interface HeaderProps {
   className?: string;
@@ -14,10 +13,14 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       className
     )}>
       <div className="flex items-center space-x-2">
-        <GraduationCap className="h-8 w-8 text-primary" />
+        <img 
+          src="/lovable-uploads/learnleap-logo.png" 
+          alt="LearnLeap Logo" 
+          className="h-10 w-auto" 
+        />
         <div className="flex flex-col">
-          <h1 className="text-xl font-semibold tracking-tight">EduQuest</h1>
-          <p className="text-xs text-muted-foreground">Institution Search System</p>
+          <h1 className="text-xl font-semibold tracking-tight">LearnLeap</h1>
+          <p className="text-xs text-muted-foreground">DISCOVER, LEARN, GROW</p>
         </div>
       </div>
       

@@ -14,7 +14,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Research'],
     specialPrograms: ['NUS Overseas Colleges', 'Double Degree Programs', 'Student Exchange'],
     description: 'The National University of Singapore (NUS) is a comprehensive research university located in Singapore. Founded in 1905, it is the oldest higher education institution in Singapore and consistently ranks among the top universities in Asia and the world.',
-    imageUrl: 'https://nus.edu.sg/images/default-source/base/logo.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/NUS_coat_of_arms.svg/1200px-NUS_coat_of_arms.svg.png'
   },
   {
     id: '2',
@@ -29,7 +29,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Entrepreneurship'],
     specialPrograms: ['Renaissance Engineering Programme', 'CN Yang Scholars Programme', 'Global Exchange'],
     description: 'Nanyang Technological University (NTU) is a public research university in Singapore. The university has been ranked as overall 1st in the ranking of young universities in the QS World University Rankings since 2015.',
-    imageUrl: 'https://www.ntu.edu.sg/images/default-source/corporate/ntu_logo.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b8/Nanyang_Technological_University_coat_of_arms_vector.svg/1200px-Nanyang_Technological_University_coat_of_arms_vector.svg.png'
   },
   {
     id: '3',
@@ -44,7 +44,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Arts', 'Sports', 'Community Service', 'Student Leadership'],
     specialPrograms: ['SMU-X', 'Global Impact Scholarship', 'SMU Ventures'],
     description: 'Singapore Management University (SMU) is a premier university in Asia, internationally recognized for its world-class research and distinguished teaching focused on Management, Social Sciences, and Computing.',
-    imageUrl: 'https://admissions.smu.edu.sg/sites/admissions.smu.edu.sg/files/SMU-logo-2.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Singapore_Management_University_logo.svg/1200px-Singapore_Management_University_logo.svg.png'
   },
   {
     id: '4',
@@ -58,7 +58,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Leadership'],
     specialPrograms: ['Raffles Diploma', 'Raffles Leadership Programme', 'Research Studies'],
     description: 'Raffles Institution (RI) is the oldest school in Singapore for pre-tertiary education. It has a long tradition of producing leaders in various fields and is known for its academic excellence.',
-    imageUrl: 'https://www.ri.edu.sg/sites/corporate/themes/raffles/RI-logo.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/90/Raffles_Institution_school_crest.png/220px-Raffles_Institution_school_crest.png'
   },
   {
     id: '5',
@@ -72,7 +72,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Student Leadership'],
     specialPrograms: ['Hwa Chong Diploma', 'Bi-Cultural Studies Programme', 'Art Elective Programme'],
     description: 'Hwa Chong Institution (HCI) is an independent school in Singapore offering secondary and pre-university education. It is known for its bilingual and bicultural learning environment.',
-    imageUrl: 'https://hci.edu.sg/wp-content/uploads/2020/08/HCI-Logo.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/HCI_Crest.png/220px-HCI_Crest.png'
   },
   {
     id: '6',
@@ -87,7 +87,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Design Innovation', 'Sports', 'Arts', 'Entrepreneurship'],
     specialPrograms: ['SUTD-MIT Dual Masters', 'SUTD Technology Entrepreneurship Programme', 'SUTD-ZJU Innovation, Design and Entrepreneurship Alliance'],
     description: 'Singapore University of Technology and Design (SUTD) is Singapore\'s fourth public university. SUTD was established in collaboration with MIT to advance knowledge and nurture technically grounded leaders and innovators to serve societal needs.',
-    imageUrl: 'https://www.sutd.edu.sg/assets/sutd/img/SUTD-logo.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/58/SUTD-logo-20170512.png/220px-SUTD-logo-20170512.png'
   },
   {
     id: '7',
@@ -101,7 +101,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Service Learning'],
     specialPrograms: ['Talent Development Programme', 'Victoria Enhanced Curriculum', 'Leadership Programme'],
     description: 'Victoria Junior College (VJC) is a junior college in Singapore established in 1984. It offers a two-year course leading to the GCE A-Level examination and is known for its strong academic and co-curricular programmes.',
-    imageUrl: 'https://vjc.moe.edu.sg/wp-content/uploads/2020/11/VJC_2017_color_transparent-1.png'
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/46/Victoria_Junior_College_Logo.svg/1200px-Victoria_Junior_College_Logo.svg.png'
   },
   {
     id: '8',

@@ -49,7 +49,7 @@ const Index = () => {
               Find Your Perfect <span className="text-primary">Educational Institution</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6 animate-slide-down" style={{ animationDelay: '100ms' }}>
-              Discover universities, junior colleges, and schools across Singapore with our comprehensive search system.
+              Discover universities, junior colleges, and schools across Singapore with LearnLeap's comprehensive search system.
             </p>
             
             <div className="max-w-3xl mx-auto animate-scale-in" style={{ animationDelay: '200ms' }}>
@@ -200,12 +200,16 @@ const Index = () => {
         <div className="container mx-auto px-4 md:px-6 xl:px-0">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <GraduationCap className="h-5 w-5 text-primary" />
-              <span className="font-medium">EduQuest</span>
+              <img 
+                src="/lovable-uploads/learnleap-logo.png" 
+                alt="LearnLeap Logo" 
+                className="h-6 w-auto" 
+              />
+              <span className="font-medium">LearnLeap</span>
             </div>
             
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} EduQuest Institution Search System
+              © {new Date().getFullYear()} LearnLeap - Discover, Learn, Grow
             </p>
           </div>
         </div>
