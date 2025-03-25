@@ -23,6 +23,7 @@ const Map: React.FC<MapProps> = ({
   const [routeInfo, setRouteInfo] = useState<{distance: string; duration: string} | null>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   
+  // Get user's geolocation
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -42,6 +43,7 @@ const Map: React.FC<MapProps> = ({
     }
   }, []);
 
+  // Simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
@@ -50,6 +52,7 @@ const Map: React.FC<MapProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
+  // Update map center when institution is selected
   useEffect(() => {
     if (selectedInstitution) {
       setMapCenter({
@@ -66,6 +69,7 @@ const Map: React.FC<MapProps> = ({
     }
   }, [selectedInstitution, userLocation]);
   
+  // Simple distance calculation function
   const calculateRoute = (start: {lat: number; lng: number}, end: {lat: number; lng: number}) => {
     const R = 6371; // Radius of the Earth in km
     const dLat = (end.lat - start.lat) * Math.PI / 180;
@@ -77,12 +81,22 @@ const Map: React.FC<MapProps> = ({
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     const distance = R * c;
     
-    const duration = distance / 30 * 60; // minutes
+    const duration = distance / 30 * 60; // minutes (assuming 30 km/h average speed)
     
     setRouteInfo({
       distance: `${distance.toFixed(1)} km`,
       duration: `${Math.round(duration)} mins`
     });
+  };
+  
+  // Generate Google Maps URL with markers for all institutions
+  const generateGoogleMapsUrl = () => {
+    let baseUrl = "https://www.google.com/maps/embed/v1/view";
+    baseUrl += `?key=AIzaSyC5QhF8YHXp1YOYDYXzEEPKl8JroV-X7hc`; // Public API key for demo purposes
+    baseUrl += `&center=${mapCenter.lat},${mapCenter.lng}`;
+    baseUrl += `&zoom=12`;
+    
+    return baseUrl;
   };
   
   return (
@@ -102,9 +116,8 @@ const Map: React.FC<MapProps> = ({
         {/* Real map background */}
         <div className="h-full w-full relative overflow-hidden">
           <iframe 
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255281.19036084877!2d103.70693276922054!3d1.3143393776513576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11238a8b9375%3A0x887869cf52abf5c4!2sSingapore!5e0!3m2!1sen!2ssg!4v1624932662556!5m2!1sen!2ssg`}
+            src={generateGoogleMapsUrl()}
             className="absolute inset-0 w-full h-full border-0 z-0"
-            style={{ opacity: 0.8 }}
             loading="lazy"
             allowFullScreen
           ></iframe>

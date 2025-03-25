@@ -170,7 +170,7 @@ const Resources = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    src="https://www.youtube.com/embed/UT1VNRm_GNE" 
                     title="Understanding Singapore's Education Pathways" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -189,7 +189,7 @@ const Resources = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    src="https://www.youtube.com/embed/SVNS9uTzP0M" 
                     title="Tips for University Applications" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -208,7 +208,7 @@ const Resources = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    src="https://www.youtube.com/embed/wVB78zMz6vY" 
                     title="Campus Tour Series" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -229,7 +229,7 @@ const Resources = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    src="https://www.youtube.com/embed/EGbNI26PPYg" 
                     title="Choosing the Right Private Institution" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -248,7 +248,7 @@ const Resources = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    src="https://www.youtube.com/embed/TZ3UgC9IPec" 
                     title="Scholarship Application Tips" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -267,7 +267,7 @@ const Resources = () => {
                   <iframe 
                     width="100%" 
                     height="100%" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    src="https://www.youtube.com/embed/RHsnHMBq8A0" 
                     title="Career Guidance for Students" 
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
