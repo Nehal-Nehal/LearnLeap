@@ -1,124 +1,127 @@
 
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-from dotenv import load_dotenv
-import pymongo
 import json
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from firebase_admin import auth, credentials, initialize_app
+import firebase_admin
+import pandas as pd
+import requests
+from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
+# MongoDB connection
+MONGO_URI = os.getenv("MONGODB_URI", "mongodb+srv://tang0551:hUvvibJrWBYImwE0@cluster0.nl9y4.mongodb.net/")
+client = MongoClient(MONGO_URI)
+db = client.get_database("learnleap")
+institutions_collection = db.institutions
+users_collection = db.users
+
+# Initialize Firebase Admin SDK for backend auth verification
+try:
+    firebase_app = firebase_admin.get_app()
+except ValueError:
+    firebase_cred = credentials.Certificate("firebase-credentials.json")
+    firebase_app = initialize_app(firebase_cred)
+
 app = Flask(__name__)
 CORS(app)
 
-# MongoDB connection
-def get_mongodb_connection():
-    # In production, use environment variables for the connection string
-    mongo_uri = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
-    client = pymongo.MongoClient(mongo_uri)
-    return client.get_database("learnleap")
+@app.route("/", methods=["GET"])
+def health_check():
+    return jsonify({"status": "healthy", "message": "LearnLeap API is running"})
 
 @app.route("/api/institutions", methods=["GET"])
 def get_institutions():
-    try:
-        db = get_mongodb_connection()
-        institutions = list(db.institutions.find({}, {"_id": 0}))
-        return jsonify({
-            "status": "success",
-            "data": institutions
-        })
-    except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+    query = {}
+    
+    # Parse query parameters
+    institution_type = request.args.get('type')
+    search_query = request.args.get('query')
+    
+    if institution_type:
+        query['type'] = institution_type
+    
+    if search_query:
+        query['$or'] = [
+            {'name': {'$regex': search_query, '$options': 'i'}},
+            {'description': {'$regex': search_query, '$options': 'i'}}
+        ]
+    
+    # Convert MongoDB cursor to list of dictionaries
+    institutions = list(institutions_collection.find(query))
+    
+    # Convert ObjectId to string
+    for institution in institutions:
+        institution['_id'] = str(institution['_id'])
+    
+    return jsonify(institutions)
 
 @app.route("/api/institutions/<institution_id>", methods=["GET"])
 def get_institution(institution_id):
     try:
-        db = get_mongodb_connection()
-        institution = db.institutions.find_one({"id": institution_id}, {"_id": 0})
-        if not institution:
-            return jsonify({
-                "status": "error",
-                "message": "Institution not found"
-            }), 404
-        return jsonify({
-            "status": "success",
-            "data": institution
-        })
+        institution = institutions_collection.find_one({"_id": ObjectId(institution_id)})
+        if institution:
+            institution['_id'] = str(institution['_id'])
+            return jsonify(institution)
+        return jsonify({"error": "Institution not found"}), 404
     except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+        return jsonify({"error": str(e)}), 500
 
-@app.route("/api/institutions/search", methods=["POST"])
-def search_institutions():
-    try:
-        filters = request.json
-        query = {}
-        
-        # Build query based on filters
-        if filters.get("query"):
-            query["name"] = {"$regex": filters["query"], "$options": "i"}
-        
-        if filters.get("type") and len(filters["type"]) > 0:
-            query["type"] = {"$in": filters["type"]}
-            
-        if filters.get("location") and len(filters["location"]) > 0:
-            query["location"] = {"$in": filters["location"]}
-        
-        db = get_mongodb_connection()
-        institutions = list(db.institutions.find(query, {"_id": 0}))
-        
-        return jsonify({
-            "status": "success",
-            "data": institutions,
-            "count": len(institutions)
-        })
-    except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
-
-@app.route("/api/user/register", methods=["POST"])
+@app.route("/api/users/register", methods=["POST"])
 def register_user():
     try:
-        user_data = request.json
-        db = get_mongodb_connection()
+        data = request.json
         
         # Check if user already exists
-        existing_user = db.users.find_one({"email": user_data["email"]})
+        existing_user = users_collection.find_one({"email": data["email"]})
         if existing_user:
-            return jsonify({
-                "status": "error",
-                "message": "User already exists"
-            }), 400
+            return jsonify({"error": "User already exists"}), 400
         
         # Insert new user
-        db.users.insert_one(user_data)
+        new_user = {
+            "name": data["name"],
+            "email": data["email"],
+            "institution": data.get("institution", ""),
+            "role": data.get("role", "user"),
+            "firebase_uid": data["uid"],
+            "created_at": pd.Timestamp.now().isoformat()
+        }
         
-        return jsonify({
-            "status": "success",
-            "message": "User registered successfully"
-        })
+        result = users_collection.insert_one(new_user)
+        new_user["_id"] = str(result.inserted_id)
+        
+        return jsonify({"message": "User registered successfully", "user": new_user}), 201
     except Exception as e:
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+        return jsonify({"error": str(e)}), 500
 
-@app.route("/api/data/sync", methods=["POST"])
-def sync_data_from_gov():
-    # This endpoint would fetch data from data.gov.sg and sync to our database
-    # For now, it's a placeholder
-    return jsonify({
-        "status": "success",
-        "message": "Data sync initiated"
-    })
+@app.route("/api/users/profile", methods=["GET"])
+def get_user_profile():
+    try:
+        # Get the Firebase ID token from the Authorization header
+        auth_header = request.headers.get("Authorization", "")
+        if not auth_header.startswith("Bearer "):
+            return jsonify({"error": "Invalid authorization header"}), 401
+        
+        id_token = auth_header.split("Bearer ")[1]
+        
+        # Verify the Firebase ID token
+        decoded_token = auth.verify_id_token(id_token)
+        uid = decoded_token["uid"]
+        
+        # Get the user from the database
+        user = users_collection.find_one({"firebase_uid": uid})
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+        
+        user["_id"] = str(user["_id"])
+        return jsonify(user)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

@@ -17,5 +17,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
+// Configure Google provider
+googleProvider.setCustomParameters({
+  prompt: 'select_account' // Forces account selection even if one account is available
+});
+
+// Export auth instance and provider
 export { auth, googleProvider };
 export default app;

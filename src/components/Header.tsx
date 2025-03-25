@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/useAuth';
 import { LogIn, LogOut, User, Loader2 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link, useLocation } from 'react-router-dom';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -19,6 +20,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ className }) => {
   const { user, loading, signInWithGoogle, signOut } = useAuth();
+  const location = useLocation();
+
+  // Function to check if a path is active
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <header className={cn(
@@ -26,25 +33,49 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
       className
     )}>
       <div className="flex items-center space-x-2">
-        <div className="flex flex-col">
+        <Link to="/" className="flex flex-col">
           <h1 className="text-xl font-semibold tracking-tight">LearnLeap</h1>
           <p className="text-xs text-muted-foreground">DISCOVER, LEARN, GROW</p>
-        </div>
+        </Link>
       </div>
       
       <nav className="hidden md:flex items-center space-x-8">
-        <a href="#" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+        <Link 
+          to="/" 
+          className={cn(
+            "text-sm font-medium transition-colors",
+            isActive('/') ? "text-primary" : "text-foreground hover:text-primary"
+          )}
+        >
           Home
-        </a>
-        <a href="#" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+        </Link>
+        <Link 
+          to="/about" 
+          className={cn(
+            "text-sm font-medium transition-colors",
+            isActive('/about') ? "text-primary" : "text-foreground hover:text-primary"
+          )}
+        >
           About
-        </a>
-        <a href="#" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+        </Link>
+        <Link 
+          to="/resources" 
+          className={cn(
+            "text-sm font-medium transition-colors",
+            isActive('/resources') ? "text-primary" : "text-foreground hover:text-primary"
+          )}
+        >
           Resources
-        </a>
-        <a href="#" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+        </Link>
+        <Link 
+          to="/contact" 
+          className={cn(
+            "text-sm font-medium transition-colors",
+            isActive('/contact') ? "text-primary" : "text-foreground hover:text-primary"
+          )}
+        >
           Contact
-        </a>
+        </Link>
       </nav>
       
       <div className="flex items-center space-x-4">
@@ -67,8 +98,10 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="flex items-center">
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <Link to="/profile" className="flex items-center w-full">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center text-red-500" onClick={signOut}>
                 <LogOut className="mr-2 h-4 w-4" />

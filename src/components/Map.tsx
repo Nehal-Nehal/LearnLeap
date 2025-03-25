@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { MapPin, Navigation } from 'lucide-react';
+import { MapPin, Navigation, LocateFixed } from 'lucide-react';
 import { Institution } from '@/lib/types';
 
 interface MapProps {
@@ -19,7 +19,30 @@ const Map: React.FC<MapProps> = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [mapCenter, setMapCenter] = useState({ lat: 1.3521, lng: 103.8198 }); // Singapore center
+  const [userLocation, setUserLocation] = useState<{lat: number; lng: number} | null>(null);
+  const [routeInfo, setRouteInfo] = useState<{distance: string; duration: string} | null>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
   
+  // Get user's location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+          console.log("User location:", position.coords.latitude, position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  }, []);
+
   useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => {
@@ -36,8 +59,40 @@ const Map: React.FC<MapProps> = ({
         lat: selectedInstitution.latitude,
         lng: selectedInstitution.longitude
       });
+      
+      // If user location is available, calculate route
+      if (userLocation) {
+        calculateRoute(userLocation, {
+          lat: selectedInstitution.latitude,
+          lng: selectedInstitution.longitude
+        });
+      }
     }
-  }, [selectedInstitution]);
+  }, [selectedInstitution, userLocation]);
+  
+  const calculateRoute = (start: {lat: number; lng: number}, end: {lat: number; lng: number}) => {
+    // In a real implementation, this would call a directions API
+    // For demo purposes, we'll simulate a response
+    
+    // Calculate straight-line distance (Haversine formula)
+    const R = 6371; // Radius of the Earth in km
+    const dLat = (end.lat - start.lat) * Math.PI / 180;
+    const dLon = (end.lng - start.lng) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(start.lat * Math.PI / 180) * Math.cos(end.lat * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c;
+    
+    // Assume average speed of 30 km/h in Singapore traffic
+    const duration = distance / 30 * 60; // minutes
+    
+    setRouteInfo({
+      distance: `${distance.toFixed(1)} km`,
+      duration: `${Math.round(duration)} mins`
+    });
+  };
   
   // Group institutions by type for the legend
   const institutionTypes = [...new Set(institutions.map(inst => inst.type))];
@@ -75,6 +130,54 @@ const Map: React.FC<MapProps> = ({
                 fill="#bae6fd" stroke="#0284c7" strokeWidth="0.2" />
             </svg>
           </div>
+          
+          {/* User location marker */}
+          {userLocation && (
+            <div 
+              className="absolute transform -translate-x-1/2 -translate-y-1/2 z-30"
+              style={{ 
+                left: `${((userLocation.lng - 103.6) / 0.4) * 100}%`,
+                top: `${((1.45 - userLocation.lat) / 0.2) * 100}%`
+              }}
+            >
+              <div className="flex items-center justify-center h-6 w-6 rounded-full bg-blue-500 border-2 border-white shadow-lg pulse-animation">
+                <LocateFixed className="h-3 w-3 text-white" />
+              </div>
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 text-xs font-medium bg-white/80 px-1 rounded shadow-sm">
+                You
+              </div>
+            </div>
+          )}
+          
+          {/* Route line between user and selected institution */}
+          {userLocation && selectedInstitution && (
+            <>
+              <svg 
+                className="absolute inset-0 w-full h-full z-20"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+              >
+                <line 
+                  x1={((userLocation.lng - 103.6) / 0.4) * 100}
+                  y1={((1.45 - userLocation.lat) / 0.2) * 100}
+                  x2={((selectedInstitution.longitude - 103.6) / 0.4) * 100}
+                  y2={((1.45 - selectedInstitution.latitude) / 0.2) * 100}
+                  stroke="#3b82f6"
+                  strokeWidth="0.8"
+                  strokeDasharray="2"
+                />
+              </svg>
+              
+              {/* Route info */}
+              {routeInfo && (
+                <div className="absolute top-4 left-4 bg-white/90 p-2 rounded-md shadow-sm z-30 text-sm">
+                  <div className="font-medium">Route Information</div>
+                  <div className="text-xs text-muted-foreground">Distance: {routeInfo.distance}</div>
+                  <div className="text-xs text-muted-foreground">Est. travel time: {routeInfo.duration}</div>
+                </div>
+              )}
+            </>
+          )}
           
           {/* Institution markers */}
           <div className="absolute inset-0">
@@ -164,6 +267,24 @@ const Map: React.FC<MapProps> = ({
           </div>
         </div>
       </div>
+      
+      {/* CSS for the pulsing effect */}
+      <style jsx>{`
+        .pulse-animation {
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+          }
+        }
+      `}</style>
     </div>
   );
 };

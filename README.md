@@ -3,23 +3,51 @@
 
 LearnLeap is a comprehensive search system for educational institutions in Singapore, designed to help students and parents discover schools, colleges, and universities that meet their specific requirements.
 
+## Live Demo
+
+You can access the live demo of the project at [LearnLeap App](https://learnleap-app.web.app) (Note: This link is a placeholder and needs to be updated when deployed).
+
+## Features
+
+- **Institution Search**: Find educational institutions based on various criteria
+- **Interactive Map**: View institution locations and calculate distances from your location
+- **User Authentication**: Sign in with Google for a personalized experience
+- **Institution Registration**: Form for educational institutions to register
+- **Comprehensive Database**: Information on universities, polytechnics, junior colleges, secondary and primary schools
+- **Data Integration**: Uses data.gov.sg API to fetch educational institution data
+
 ## Project Structure
 
 This project is organized into two main directories:
 - `/frontend` - React.js application
 - `/backend` - Python API with MongoDB integration
 
-## Frontend (React)
+## Technologies Used
 
-The frontend is built with:
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-- Firebase Authentication (Google Sign-in)
+### Frontend
+- React with TypeScript
+- Vite for building
+- Tailwind CSS for styling
+- shadcn/ui for UI components
+- Firebase Authentication for Google Sign-in
+- React Router for navigation
+- React Query for data fetching
 
-### Running the Frontend
+### Backend
+- Python Flask for API
+- MongoDB for database storage
+- Firebase Admin SDK for authentication verification
+- Integration with data.gov.sg API
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v16 or later)
+- Python 3.8+
+- MongoDB account
+- Firebase project with authentication enabled
+
+### Frontend Setup
 
 ```sh
 # Install dependencies
@@ -29,14 +57,7 @@ npm install
 npm run dev
 ```
 
-## Backend (Python)
-
-The backend API is built with:
-- Python Flask
-- MongoDB for database
-- Integration with data.gov.sg for educational institution data
-
-### Setup Backend
+### Backend Setup
 
 ```sh
 # Navigate to the backend directory
@@ -62,58 +83,64 @@ python import_data.py
 python app.py
 ```
 
-## Authentication
+## Firebase Configuration
 
-The application uses Firebase Authentication for Google Sign-in. Users can sign in with their Google accounts to access personalized features.
-
-## Features
-
-- Comprehensive search for educational institutions in Singapore
-- Filtering by institution type, location, and other criteria
-- Interactive map view of institution locations
-- Institution registration system
-- User authentication via Google
-- Integration with data.gov.sg for educational institution data
-- MongoDB backend for data storage
+1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com/)
+2. Enable Google Authentication in the Authentication section
+3. Copy your Firebase configuration from Project Settings
+4. Update the `firebaseConfig` object in `src/lib/firebase.ts` with your own Firebase project details
+5. For backend auth verification, generate a new private key for your service account and save it as `firebase-credentials.json` in the backend directory
 
 ## MongoDB Configuration
 
-The backend requires a MongoDB database. The connection string should be set as an environment variable named `MONGODB_URI`. For local development, you can use a local MongoDB instance.
+1. Create a MongoDB Atlas account and set up a new cluster
+2. Create a database named "learnleap"
+3. Set up the connection string as an environment variable for the backend
 
-## Firebase Configuration
+## Environment Variables
 
-The frontend requires Firebase configuration for authentication. Update the `firebaseConfig` object in `src/lib/firebase.ts` with your own Firebase project details.
+### Backend
+- `MONGODB_URI`: MongoDB connection string
+- `PORT`: (Optional) Port for the Flask server (default: 5000)
 
-```
+## API Endpoints
 
-## How can I edit this code?
+The backend provides the following API endpoints:
 
-There are several ways of editing your application.
+- `GET /api/institutions`: Get a list of all institutions, with optional filtering
+- `GET /api/institutions/:id`: Get details of a specific institution
+- `POST /api/users/register`: Register a new user
+- `GET /api/users/profile`: Get the profile of the authenticated user
 
-**Use Lovable**
+## Deployment
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/529b5277-1183-4c3f-a223-c472d92af9d0) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Frontend
+The frontend can be deployed to Firebase Hosting:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run build
+firebase deploy --only hosting
 ```
+
+### Backend
+The backend can be deployed to a platform like Heroku, Google Cloud Run, or AWS:
+
+```sh
+# Example for Heroku
+heroku create
+git push heroku main
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgements
+
+- Data provided by [data.gov.sg](https://data.gov.sg)
+- Icons from [Lucide Icons](https://lucide.dev/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
