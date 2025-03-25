@@ -6,7 +6,7 @@ import Header from '@/components/Header';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, LogOut, Mail, User } from 'lucide-react';
+import { Loader2, LogOut, Mail } from 'lucide-react';
 
 const Profile = () => {
   const { user, loading, signOut } = useAuth();
@@ -53,9 +53,9 @@ const Profile = () => {
                   <AvatarFallback className="text-lg">{user.displayName?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
-                  <h3 className="text-xl font-medium">{user.displayName}</h3>
+                  <h3 className="text-xl font-medium">{user.displayName || "Anonymous User"}</h3>
                   <p className="text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                    <Mail className="h-3 w-3" /> {user.email}
+                    <Mail className="h-3 w-3" /> {user.email || "No email provided"}
                   </p>
                 </div>
               </CardContent>
