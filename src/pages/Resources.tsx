@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Header from '@/components/Header';
-import { FileText, BookOpen, GraduationCap, Link2, Download, ExternalLink } from 'lucide-react';
+import { FileText, BookOpen, GraduationCap, Link2, Download, ExternalLink, Play, Video } from 'lucide-react';
 
 const Resources = () => {
   return (
@@ -115,11 +115,21 @@ const Resources = () => {
                         Singapore Management University <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </li>
+                    <li>
+                      <a href="https://www.kaplan.com.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
+                        Kaplan Singapore <ExternalLink className="ml-1 h-3 w-3" />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.mdis.edu.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
+                        Management Development Institute of Singapore <ExternalLink className="ml-1 h-3 w-3" />
+                      </a>
+                    </li>
                   </ul>
                 </div>
                 
                 <div className="p-4 bg-white/80 rounded-lg border border-border/30 hover:border-primary/30 transition-colors">
-                  <h3 className="font-semibold">Polytechnic Websites</h3>
+                  <h3 className="font-semibold">Polytechnic & Private Institution Websites</h3>
                   <ul className="mt-2 space-y-2">
                     <li>
                       <a href="https://www.sp.edu.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
@@ -132,8 +142,18 @@ const Resources = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="https://www.tp.edu.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
-                        Temasek Polytechnic <ExternalLink className="ml-1 h-3 w-3" />
+                      <a href="https://www.psi.edu.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
+                        PSB Academy <ExternalLink className="ml-1 h-3 w-3" />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.jcu.edu.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
+                        James Cook University Singapore <ExternalLink className="ml-1 h-3 w-3" />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.simge.edu.sg/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-sm">
+                        Singapore Institute of Management Global Education <ExternalLink className="ml-1 h-3 w-3" />
                       </a>
                     </li>
                   </ul>
@@ -145,9 +165,18 @@ const Resources = () => {
           <div className="bg-primary/5 rounded-xl p-8 my-8">
             <h2 className="text-2xl font-bold mb-4 text-center">Educational Videos</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/80 rounded-lg p-4 shadow-sm">
-                <div className="aspect-video bg-muted rounded-md flex items-center justify-center mb-3">
-                  <GraduationCap className="h-10 w-10 text-primary/50" />
+              <div className="bg-white/80 rounded-lg p-4 shadow-sm overflow-hidden">
+                <div className="aspect-video bg-muted rounded-md mb-3 overflow-hidden">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Understanding Singapore's Education Pathways" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
                 </div>
                 <h3 className="font-semibold text-sm">Understanding Singapore's Education Pathways</h3>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -155,9 +184,18 @@ const Resources = () => {
                 </p>
               </div>
               
-              <div className="bg-white/80 rounded-lg p-4 shadow-sm">
-                <div className="aspect-video bg-muted rounded-md flex items-center justify-center mb-3">
-                  <GraduationCap className="h-10 w-10 text-primary/50" />
+              <div className="bg-white/80 rounded-lg p-4 shadow-sm overflow-hidden">
+                <div className="aspect-video bg-muted rounded-md mb-3 overflow-hidden">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Tips for University Applications" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
                 </div>
                 <h3 className="font-semibold text-sm">Tips for University Applications</h3>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -165,13 +203,81 @@ const Resources = () => {
                 </p>
               </div>
               
-              <div className="bg-white/80 rounded-lg p-4 shadow-sm">
-                <div className="aspect-video bg-muted rounded-md flex items-center justify-center mb-3">
-                  <GraduationCap className="h-10 w-10 text-primary/50" />
+              <div className="bg-white/80 rounded-lg p-4 shadow-sm overflow-hidden">
+                <div className="aspect-video bg-muted rounded-md mb-3 overflow-hidden">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Campus Tour Series" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
                 </div>
                 <h3 className="font-semibold text-sm">Campus Tour Series</h3>
                 <p className="text-xs text-muted-foreground mt-1">
                   Virtual tours of Singapore's top educational institutions.
+                </p>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-6 mt-6">
+              <div className="bg-white/80 rounded-lg p-4 shadow-sm overflow-hidden">
+                <div className="aspect-video bg-muted rounded-md mb-3 overflow-hidden">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Choosing the Right Private Institution" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
+                </div>
+                <h3 className="font-semibold text-sm">Choosing the Right Private Institution</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Key factors to consider when selecting a private education provider.
+                </p>
+              </div>
+              
+              <div className="bg-white/80 rounded-lg p-4 shadow-sm overflow-hidden">
+                <div className="aspect-video bg-muted rounded-md mb-3 overflow-hidden">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Scholarship Application Tips" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
+                </div>
+                <h3 className="font-semibold text-sm">Scholarship Application Tips</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  How to stand out in competitive scholarship applications.
+                </p>
+              </div>
+              
+              <div className="bg-white/80 rounded-lg p-4 shadow-sm overflow-hidden">
+                <div className="aspect-video bg-muted rounded-md mb-3 overflow-hidden">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="Career Guidance for Students" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                    className="w-full h-full object-cover"
+                  ></iframe>
+                </div>
+                <h3 className="font-semibold text-sm">Career Guidance for Students</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Planning your future career path based on your educational choices.
                 </p>
               </div>
             </div>

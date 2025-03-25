@@ -1,3 +1,4 @@
+
 import { Institution } from './types';
 
 export const institutions: Institution[] = [
@@ -29,7 +30,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Entrepreneurship'],
     specialPrograms: ['Renaissance Engineering Programme', 'CN Yang Scholars Programme', 'Global Exchange'],
     description: 'Nanyang Technological University (NTU) is a public research university in Singapore. The university has been ranked as overall 1st in the ranking of young universities in the QS World University Rankings since 2015.',
-    imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1186&q=80'
+    imageUrl: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80'
   },
   {
     id: '3',
@@ -285,6 +286,90 @@ export const institutions: Institution[] = [
     specialPrograms: ['Teaching Industry Collaboration', 'Overseas Program', 'Innovation & Enterprise'],
     description: 'Nanyang Polytechnic is a tertiary education institution in Singapore offering diploma courses in various disciplines. It is known for its strong industry connections and innovative teaching approaches.',
     imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+  },
+  {
+    id: '21',
+    name: 'Kaplan Singapore',
+    type: 'Private Institution',
+    location: 'Singapore',
+    latitude: 1.2930,
+    longitude: 103.8556,
+    entryRequirements: ['A-Levels', 'Polytechnic Diploma', 'Mature Student Entry'],
+    coursesOffered: ['Business', 'Accounting', 'Banking & Finance', 'Hospitality & Tourism', 'Law'],
+    coCurricularActivities: ['Professional Development', 'Industry Talks', 'Networking Events'],
+    specialPrograms: ['Industry-Based Learning', 'Professional Certification Courses', 'Career Development'],
+    description: 'Kaplan Singapore is a private education institution offering a wide range of academic programs in partnership with renowned overseas universities. It focuses on providing quality education and industry-relevant skills.',
+    imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+  },
+  {
+    id: '22',
+    name: 'PSB Academy',
+    type: 'Private Institution',
+    location: 'Singapore',
+    latitude: 1.3144,
+    longitude: 103.8616,
+    entryRequirements: ['A-Levels', 'Polytechnic Diploma', 'Working Experience'],
+    coursesOffered: ['Business', 'Engineering', 'Life Sciences', 'Communication', 'Information Technology'],
+    coCurricularActivities: ['Student Clubs', 'Industry Visits', 'Professional Development'],
+    specialPrograms: ['Certificate Programs', 'Diploma Programs', 'Degree Programs'],
+    description: 'PSB Academy is a private education institution in Singapore providing diploma, undergraduate, and postgraduate programs in partnership with Australian and UK universities. It is known as "The Future Academy" with a focus on preparing students for Industry 4.0.',
+    imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+  },
+  {
+    id: '23',
+    name: 'Management Development Institute of Singapore',
+    type: 'Private Institution',
+    location: 'Singapore',
+    latitude: 1.3287,
+    longitude: 103.8564,
+    entryRequirements: ['A-Levels', 'Polytechnic Diploma', 'Working Experience'],
+    coursesOffered: ['Business', 'Tourism & Hospitality', 'Technology', 'Media & Communications', 'Psychology'],
+    coCurricularActivities: ['Sports', 'Arts', 'Student Clubs', 'Community Service'],
+    specialPrograms: ['Advanced Diploma Programs', 'Degree Programs', 'Postgraduate Programs'],
+    description: 'The Management Development Institute of Singapore (MDIS) is Singapore\'s oldest not-for-profit professional institute for lifelong learning. It offers internationally accredited courses in partnership with renowned universities from the UK and Australia.',
+    imageUrl: 'https://images.unsplash.com/photo-1560785496-3c9d27877182?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
+  },
+  {
+    id: '24',
+    name: 'James Cook University Singapore',
+    type: 'Private Institution',
+    location: 'Singapore',
+    latitude: 1.3398,
+    longitude: 103.8479,
+    entryRequirements: ['A-Levels', 'Polytechnic Diploma', 'International Baccalaureate'],
+    coursesOffered: ['Business', 'Education', 'Information Technology', 'Psychology', 'Tourism & Hospitality'],
+    coCurricularActivities: ['Sports', 'Student Clubs', 'Community Service', 'Research'],
+    specialPrograms: ['Joint Degree Programs', 'Master\'s Programs', 'Research Programs'],
+    description: 'James Cook University Singapore is a branch campus of James Cook University Australia, offering the same internationally recognized degrees in a multicultural setting. It is the first private education institution in Singapore to be awarded the EduTrust Star certification.',
+    imageUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+  },
+  {
+    id: '25',
+    name: 'Curtin Singapore',
+    type: 'Private Institution',
+    location: 'Singapore',
+    latitude: 1.3175,
+    longitude: 103.8785,
+    entryRequirements: ['A-Levels', 'Polytechnic Diploma', 'Working Experience'],
+    coursesOffered: ['Business', 'Accounting', 'Finance', 'Marketing', 'Logistics & Supply Chain Management'],
+    coCurricularActivities: ['Student Clubs', 'Industry Visits', 'Professional Development'],
+    specialPrograms: ['Foundation Programs', 'Undergraduate Programs', 'Postgraduate Programs'],
+    description: 'Curtin Singapore is a branch campus of Curtin University, Australia, offering globally recognized programs in business and communication. Students receive the same qualification as they would in Australia but with the advantage of studying in Singapore.',
+    imageUrl: 'https://images.unsplash.com/photo-1596495578065-6e0763fa1178?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80'
+  },
+  {
+    id: '26',
+    name: 'Singapore School of Design and Technology',
+    type: 'Private Institution',
+    location: 'Singapore',
+    latitude: 1.3071,
+    longitude: 103.8320,
+    entryRequirements: ['O-Levels', 'A-Levels', 'Portfolio Review'],
+    coursesOffered: ['Graphic Design', 'Product Design', 'Fashion Design', 'Digital Media', 'Game Development'],
+    coCurricularActivities: ['Design Competitions', 'Industry Projects', 'Arts Clubs', 'Portfolio Building'],
+    specialPrograms: ['Professional Certification Courses', 'Diploma Programs', 'Industry Attachments'],
+    description: 'The Singapore School of Design and Technology is a specialized private institution focusing on creative arts and design education. It emphasizes hands-on learning and industry collaborations to prepare students for careers in the creative industry.',
+    imageUrl: 'https://images.unsplash.com/photo-1508997449629-303059a039c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   }
 ];
 

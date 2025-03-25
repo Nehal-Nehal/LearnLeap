@@ -102,7 +102,7 @@ const Map: React.FC<MapProps> = ({
         {/* Real map background */}
         <div className="h-full w-full relative overflow-hidden">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255281.19036084877!2d103.70693276922054!3d1.3143393776513576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11238a8b9375%3A0x887869cf52abf5c4!2sSingapore!5e0!3m2!1sen!2ssg!4v1624932662556!5m2!1sen!2ssg" 
+            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255281.19036084877!2d103.70693276922054!3d1.3143393776513576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11238a8b9375%3A0x887869cf52abf5c4!2sSingapore!5e0!3m2!1sen!2ssg!4v1624932662556!5m2!1sen!2ssg`}
             className="absolute inset-0 w-full h-full border-0 z-0"
             style={{ opacity: 0.8 }}
             loading="lazy"
@@ -168,6 +168,7 @@ const Map: React.FC<MapProps> = ({
                 else if (institution.type === "Polytechnic") markerColorClass = "text-green-500";
                 else if (institution.type === "Primary School") markerColorClass = "text-purple-500";
                 else if (institution.type === "Secondary School") markerColorClass = "text-cyan-600";
+                else if (institution.type === "Private Institution") markerColorClass = "text-rose-500";
                 
                 return (
                   <button
@@ -235,6 +236,10 @@ const Map: React.FC<MapProps> = ({
                 <MapPin className="h-3 w-3 text-cyan-600" />
                 <span className="text-xs">Secondary Schools</span>
               </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-3 w-3 text-rose-500" />
+                <span className="text-xs">Private Institutions</span>
+              </div>
             </div>
           </div>
         </div>
@@ -256,7 +261,7 @@ const Map: React.FC<MapProps> = ({
             box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
           }
         }
-      `}
+        `}
       </style>
     </div>
   );

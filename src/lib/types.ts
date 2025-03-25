@@ -2,7 +2,7 @@
 export interface Institution {
   id: string;
   name: string;
-  type: 'University' | 'Junior College' | 'School' | string;
+  type: string; // University, Junior College, School, Polytechnic, Private Institution, etc.
   location: string;
   latitude: number;
   longitude: number;
