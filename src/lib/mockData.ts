@@ -14,7 +14,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Research'],
     specialPrograms: ['NUS Overseas Colleges', 'Double Degree Programs', 'Student Exchange'],
     description: 'The National University of Singapore (NUS) is a comprehensive research university located in Singapore. Founded in 1905, it is the oldest higher education institution in Singapore and consistently ranks among the top universities in Asia and the world.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/NUS_coat_of_arms.svg/1200px-NUS_coat_of_arms.svg.png'
+    imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1186&q=80'
   },
   {
     id: '2',
@@ -29,7 +29,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Entrepreneurship'],
     specialPrograms: ['Renaissance Engineering Programme', 'CN Yang Scholars Programme', 'Global Exchange'],
     description: 'Nanyang Technological University (NTU) is a public research university in Singapore. The university has been ranked as overall 1st in the ranking of young universities in the QS World University Rankings since 2015.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b8/Nanyang_Technological_University_coat_of_arms_vector.svg/1200px-Nanyang_Technological_University_coat_of_arms_vector.svg.png'
+    imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1186&q=80'
   },
   {
     id: '3',
@@ -44,7 +44,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Arts', 'Sports', 'Community Service', 'Student Leadership'],
     specialPrograms: ['SMU-X', 'Global Impact Scholarship', 'SMU Ventures'],
     description: 'Singapore Management University (SMU) is a premier university in Asia, internationally recognized for its world-class research and distinguished teaching focused on Management, Social Sciences, and Computing.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/Singapore_Management_University_logo.svg/1200px-Singapore_Management_University_logo.svg.png'
+    imageUrl: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '4',
@@ -58,7 +58,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Leadership'],
     specialPrograms: ['Raffles Diploma', 'Raffles Leadership Programme', 'Research Studies'],
     description: 'Raffles Institution (RI) is the oldest school in Singapore for pre-tertiary education. It has a long tradition of producing leaders in various fields and is known for its academic excellence.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/9/90/Raffles_Institution_school_crest.png/220px-Raffles_Institution_school_crest.png'
+    imageUrl: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '5',
@@ -72,7 +72,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Student Leadership'],
     specialPrograms: ['Hwa Chong Diploma', 'Bi-Cultural Studies Programme', 'Art Elective Programme'],
     description: 'Hwa Chong Institution (HCI) is an independent school in Singapore offering secondary and pre-university education. It is known for its bilingual and bicultural learning environment.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/HCI_Crest.png/220px-HCI_Crest.png'
+    imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '6',
@@ -87,7 +87,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Design Innovation', 'Sports', 'Arts', 'Entrepreneurship'],
     specialPrograms: ['SUTD-MIT Dual Masters', 'SUTD Technology Entrepreneurship Programme', 'SUTD-ZJU Innovation, Design and Entrepreneurship Alliance'],
     description: 'Singapore University of Technology and Design (SUTD) is Singapore\'s fourth public university. SUTD was established in collaboration with MIT to advance knowledge and nurture technically grounded leaders and innovators to serve societal needs.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/58/SUTD-logo-20170512.png/220px-SUTD-logo-20170512.png'
+    imageUrl: 'https://images.unsplash.com/photo-1544531586-fde5298cdd40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '7',
@@ -101,7 +101,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Service Learning'],
     specialPrograms: ['Talent Development Programme', 'Victoria Enhanced Curriculum', 'Leadership Programme'],
     description: 'Victoria Junior College (VJC) is a junior college in Singapore established in 1984. It offers a two-year course leading to the GCE A-Level examination and is known for its strong academic and co-curricular programmes.',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/46/Victoria_Junior_College_Logo.svg/1200px-Victoria_Junior_College_Logo.svg.png'
+    imageUrl: 'https://images.unsplash.com/photo-1592280771190-3e2e4d977758?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80'
   },
   {
     id: '8',
@@ -115,7 +115,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Community Involvement'],
     specialPrograms: ['Talent Development', 'Higher Education and Career Guidance', 'Overseas Immersion'],
     description: 'Anderson Serangoon Junior College (ASRJC) is a junior college in Singapore formed through the merger of Anderson Junior College and Serangoon Junior College in 2019.',
-    imageUrl: 'https://asrjc.moe.edu.sg/wp-content/uploads/2021/01/ASRJC-Logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1232&q=80'
   },
   {
     id: '9',
@@ -129,7 +129,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Clubs', 'Leadership'],
     specialPrograms: ['Raffles Leadership Programme', 'Raffles Girls\' Talent Development', 'RGS Centre for Pedagogical Research and Learning'],
     description: 'Raffles Girls\' School (Secondary) is an independent girls\' school in Singapore. It offers a six-year Integrated Programme leading to the GCE A-Level examination in collaboration with Raffles Institution.',
-    imageUrl: 'https://www.rgs.edu.sg/wp-content/uploads/2020/11/rgs-logo-vertical.png'
+    imageUrl: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80'
   },
   {
     id: '10',
@@ -143,7 +143,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Uniformed Groups', 'Clubs & Societies'],
     specialPrograms: ['ACSian Theatre & The Arts', 'Regional Studies Programme', 'Science & Mathematics Talent Programme'],
     description: 'Anglo-Chinese School (Independent) is an autonomous Methodist boys\' school in Singapore. It offers the four-year Singapore-Cambridge GCE Ordinary Level Programme and the six-year Integrated Programme leading to the International Baccalaureate Diploma.',
-    imageUrl: 'https://acsindep.moe.edu.sg/wp-content/uploads/2021/01/acs-logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
   },
   {
     id: '11',
@@ -158,7 +158,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Student Clubs', 'Community Service', 'Professional Development'],
     specialPrograms: ['Integrated Work Study Programme', 'Overseas Immersion Programme', 'Enterprise Leadership'],
     description: 'Singapore Institute of Technology (SIT) is Singapore\'s university of applied learning. It offers industry-focused degree programs and aims to develop individuals who can contribute towards the advancement of society.',
-    imageUrl: 'https://www.singaporetech.edu.sg/sites/default/files/sit-logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1592494804071-1486d4149888?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '12',
@@ -172,7 +172,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Student Clubs', 'Sports', 'Community Service', 'International Exposure'],
     specialPrograms: ['Global Learning', 'SIM-UOL Programmes', 'Career Development'],
     description: 'Singapore Institute of Management (SIM) is one of Singapore\'s leading private education institutions, offering various undergraduate and postgraduate programs in partnership with renowned international universities.',
-    imageUrl: 'https://www.sim.edu.sg/themes/custom/sim/logo.svg'
+    imageUrl: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '13',
@@ -186,7 +186,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Student Leadership'],
     specialPrograms: ['Temasek Academy', 'Talent Development', 'Overseas Learning Programme'],
     description: 'Temasek Junior College (TJC) is a junior college in Singapore that offers a two-year pre-university education leading to the GCE A-Level examination. It is known for its academic excellence and vibrant campus life.',
-    imageUrl: 'https://www.temasekjc.moe.edu.sg/qql/slot/u550/2020/AboutTJC/TJC_logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '14',
@@ -200,7 +200,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Student Leadership'],
     specialPrograms: ['NJC Boarding Programme', 'Special Programme in Humanities', 'Science Research Programme'],
     description: 'National Junior College (NJC) is the first junior college established in Singapore. It offers both the Integrated Programme and the Junior College Programme, providing students with diverse learning opportunities.',
-    imageUrl: 'https://natjc.moe.edu.sg/wp-content/uploads/2020/07/NJC-Logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '15',
@@ -214,7 +214,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Performing Arts', 'Clubs & Societies', 'Leadership'],
     specialPrograms: ['Bicultural Studies Programme', 'Research Studies', 'Leadership Development'],
     description: 'Nanyang Girls\' High School (NYGH) is an independent school in Singapore offering secondary education for girls. It is known for its rigorous academic curriculum and strong emphasis on bilingual education.',
-    imageUrl: 'https://www.nygh.edu.sg/wp-content/uploads/2020/07/nygh-logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '16',
@@ -228,7 +228,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Student Leadership'],
     specialPrograms: ['Overseas Immersion', 'Industry Partnerships', 'Entrepreneurship'],
     description: 'Ngee Ann Polytechnic is a tertiary education institution in Singapore offering diploma courses in various disciplines. It is known for its industry-relevant curriculum and strong focus on practical skills development.',
-    imageUrl: 'https://www.np.edu.sg/images/default-source/default-album/np-logo-2.png'
+    imageUrl: 'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1186&q=80'
   },
   {
     id: '17',
@@ -242,7 +242,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Student Clubs'],
     specialPrograms: ['SP Engineering Academy', 'SP Design School', 'SP Business School'],
     description: 'Singapore Polytechnic is the first polytechnic established in Singapore. It offers diploma courses in various disciplines and is recognized for its quality education and strong industry connections.',
-    imageUrl: 'https://www.sp.edu.sg/sp/sites/themes/bootstrap/sp/img/common/logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1606761568499-6d2451b23c66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
   },
   {
     id: '18',
@@ -256,7 +256,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Student Clubs'],
     specialPrograms: ['TP Entrepreneurship', 'TP Law & Management', 'TP Veterinary Technology'],
     description: 'Temasek Polytechnic is a tertiary institution in Singapore offering diploma courses across various disciplines. It is known for its practice-oriented curriculum and modern campus facilities.',
-    imageUrl: 'https://www.tp.edu.sg/content/dam/tp-web/images/common/tp-logo.svg'
+    imageUrl: 'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80'
   },
   {
     id: '19',
@@ -270,7 +270,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Student Clubs'],
     specialPrograms: ['Problem-based Learning', 'Industry Immersion', 'Overseas Exposure'],
     description: 'Republic Polytechnic is a tertiary education institution in Singapore known for its unique problem-based learning approach. It offers diploma courses across various disciplines and emphasizes hands-on learning.',
-    imageUrl: 'https://www.rp.edu.sg/img/logo.png'
+    imageUrl: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   },
   {
     id: '20',
@@ -284,7 +284,7 @@ export const institutions: Institution[] = [
     coCurricularActivities: ['Sports', 'Arts', 'Community Service', 'Student Clubs'],
     specialPrograms: ['Teaching Industry Collaboration', 'Overseas Program', 'Innovation & Enterprise'],
     description: 'Nanyang Polytechnic is a tertiary education institution in Singapore offering diploma courses in various disciplines. It is known for its strong industry connections and innovative teaching approaches.',
-    imageUrl: 'https://www.nyp.edu.sg/content/dam/nyp/NYP-Logo-Color.png'
+    imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
   }
 ];
 
