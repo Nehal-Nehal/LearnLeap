@@ -92,7 +92,7 @@ const Map: React.FC<MapProps> = ({
   // Generate Google Maps URL with markers for all institutions
   const generateGoogleMapsUrl = () => {
     let baseUrl = "https://www.google.com/maps/embed/v1/view";
-    baseUrl += `?key=AIzaSyC5QhF8YHXp1YOYDYXzEEPKl8JroV-X7hc`; // Public API key for demo purposes
+    baseUrl += `?key=AIzaSyByQ0_LHlYRlS_WBW8C7uq4fiGZfkuGPZQ`; // Public API key for demo purposes
     baseUrl += `&center=${mapCenter.lat},${mapCenter.lng}`;
     baseUrl += `&zoom=12`;
     
