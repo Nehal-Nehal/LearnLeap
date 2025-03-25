@@ -7,7 +7,7 @@ LearnLeap is a comprehensive search system for educational institutions in Singa
 
 This project is organized into two main directories:
 - `/frontend` - React.js application
-- `/backend` - Python API (placeholder structure for future implementation)
+- `/backend` - Python API with MongoDB integration
 
 ## Frontend (React)
 
@@ -22,9 +22,6 @@ The frontend is built with:
 ### Running the Frontend
 
 ```sh
-# Navigate to the frontend directory
-cd frontend
-
 # Install dependencies
 npm install
 
@@ -34,9 +31,12 @@ npm run dev
 
 ## Backend (Python)
 
-The backend API is built with Python and is set up to integrate with data.gov.sg for educational institution data.
+The backend API is built with:
+- Python Flask
+- MongoDB for database
+- Integration with data.gov.sg for educational institution data
 
-### Setup Backend (Future Implementation)
+### Setup Backend
 
 ```sh
 # Navigate to the backend directory
@@ -48,6 +48,15 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Set MongoDB connection string environment variable
+# On Unix/Linux/Mac:
+export MONGODB_URI="your_mongodb_connection_string"
+# On Windows:
+set MONGODB_URI="your_mongodb_connection_string"
+
+# Run the data import script (fetches data from data.gov.sg)
+python import_data.py
 
 # Start the API server
 python app.py
@@ -64,10 +73,18 @@ The application uses Firebase Authentication for Google Sign-in. Users can sign 
 - Interactive map view of institution locations
 - Institution registration system
 - User authentication via Google
+- Integration with data.gov.sg for educational institution data
+- MongoDB backend for data storage
 
-## Project info
+## MongoDB Configuration
 
-**URL**: https://lovable.dev/projects/529b5277-1183-4c3f-a223-c472d92af9d0
+The backend requires a MongoDB database. The connection string should be set as an environment variable named `MONGODB_URI`. For local development, you can use a local MongoDB instance.
+
+## Firebase Configuration
+
+The frontend requires Firebase configuration for authentication. Update the `firebaseConfig` object in `src/lib/firebase.ts` with your own Firebase project details.
+
+```
 
 ## How can I edit this code?
 
@@ -100,25 +117,3 @@ npm i
 # Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/529b5277-1183-4c3f-a223-c472d92af9d0) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)

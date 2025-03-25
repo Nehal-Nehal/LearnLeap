@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { MapPin } from 'lucide-react';
+import { MapPin, Navigation } from 'lucide-react';
 import { Institution } from '@/lib/types';
 
 interface MapProps {
@@ -18,6 +18,7 @@ const Map: React.FC<MapProps> = ({
   className
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [mapCenter, setMapCenter] = useState({ lat: 1.3521, lng: 103.8198 }); // Singapore center
   
   useEffect(() => {
     // Simulate loading time
@@ -27,6 +28,16 @@ const Map: React.FC<MapProps> = ({
     
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    // Center map on selected institution if available
+    if (selectedInstitution) {
+      setMapCenter({
+        lat: selectedInstitution.latitude,
+        lng: selectedInstitution.longitude
+      });
+    }
+  }, [selectedInstitution]);
   
   // Group institutions by type for the legend
   const institutionTypes = [...new Set(institutions.map(inst => inst.type))];
@@ -45,13 +56,23 @@ const Map: React.FC<MapProps> = ({
       )}
       
       <div className="relative h-full">
-        {/* Placeholder map - would be replaced with actual map API in production */}
+        {/* Singapore map with institutions */}
         <div className="h-full w-full bg-[#f8f9fa] bg-opacity-80 relative overflow-hidden">
           <div className="absolute inset-0">
-            {/* Singapore map outline placeholder */}
+            {/* Singapore map outline */}
             <svg viewBox="0 0 100 100" className="w-full h-full opacity-20">
               <path d="M30,30 C40,20 60,20 70,30 C80,40 80,60 70,70 C60,80 40,80 30,70 C20,60 20,40 30,30 Z" 
                 fill="none" stroke="#000" strokeWidth="0.5" />
+            </svg>
+            
+            {/* Singapore region outlines - simplified */}
+            <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-10">
+              <path d="M25,40 C30,35 40,38 45,35 C50,32 55,35 60,38 C65,41 70,38 75,40 C70,50 65,55 60,60 C55,65 45,65 40,60 C35,55 30,50 25,40 Z" 
+                fill="#7dd3fc" stroke="#0ea5e9" strokeWidth="0.2" />
+              <path d="M45,35 C50,32 55,35 60,38 C65,41 70,38 75,40 C80,45 78,55 75,60 C70,65 65,62 60,60 C55,65 45,65 40,60 C45,55 50,50 45,35 Z" 
+                fill="#a5f3fc" stroke="#06b6d4" strokeWidth="0.2" />
+              <path d="M25,40 C30,35 40,38 45,35 C50,50 45,55 40,60 C35,55 30,50 25,40 Z" 
+                fill="#bae6fd" stroke="#0284c7" strokeWidth="0.2" />
             </svg>
           </div>
           
@@ -69,6 +90,8 @@ const Map: React.FC<MapProps> = ({
               if (institution.type === "Junior College") markerColorClass = "text-orange-500";
               else if (institution.type === "School") markerColorClass = "text-blue-500";
               else if (institution.type === "Polytechnic") markerColorClass = "text-green-500";
+              else if (institution.type === "Primary School") markerColorClass = "text-purple-500";
+              else if (institution.type === "Secondary School") markerColorClass = "text-cyan-600";
               
               return (
                 <button
@@ -99,6 +122,16 @@ const Map: React.FC<MapProps> = ({
             })}
           </div>
           
+          {/* Map controls */}
+          <div className="absolute top-4 right-4 space-y-2">
+            <button 
+              className="flex items-center justify-center h-10 w-10 bg-white rounded-full shadow-md hover:bg-gray-50"
+              onClick={() => setMapCenter({ lat: 1.3521, lng: 103.8198 })}
+            >
+              <Navigation className="h-5 w-5 text-primary" />
+            </button>
+          </div>
+          
           {/* Map legend */}
           <div className="absolute bottom-4 right-4 bg-white/90 p-3 rounded-md shadow-sm">
             <div className="text-xs font-medium mb-2">Institution Types</div>
@@ -118,6 +151,14 @@ const Map: React.FC<MapProps> = ({
               <div className="flex items-center gap-2">
                 <MapPin className="h-3 w-3 text-green-500" />
                 <span className="text-xs">Polytechnics</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-3 w-3 text-purple-500" />
+                <span className="text-xs">Primary Schools</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-3 w-3 text-cyan-600" />
+                <span className="text-xs">Secondary Schools</span>
               </div>
             </div>
           </div>

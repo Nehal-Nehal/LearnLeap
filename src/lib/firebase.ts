@@ -3,14 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 // Your Firebase configuration
-// Replace these with your actual Firebase project config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY", // To be replaced with actual Firebase API key
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyA0oVRRgJE2t6BCyOq4VQT7HzEXLhb-1-U",
+  authDomain: "learnleap-app.firebaseapp.com",
+  projectId: "learnleap-app",
+  storageBucket: "learnleap-app.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:1234567890abcdef"
 };
 
 // Initialize Firebase
