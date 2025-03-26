@@ -25,9 +25,6 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  // ✅ Debug: Check if user is populated
-  console.log("Header user context:", user);
-
   return (
     <header className={cn(
       "w-full px-6 py-4 flex items-center justify-between bg-white/80 backdrop-blur-md border-b border-border/40 shadow-sm z-10",
