@@ -1,0 +1,148 @@
+from flask_pymongo import PyMongo
+from flask import jsonify
+from bs4 import BeautifulSoup
+import requests
+hawker_collection = None
+user_collection = None
+hawker_summary = {}
+def init_mongo(mongo_instance):
+    global mongo
+    mongo = mongo_instance
+    
+def parse_html_table(html_content):
+    """
+    Parses an HTML table and extracts key-value pairs.
+    """
+    parsed_data = {}
+
+    # Check if description is valid HTML
+    if not html_content or "<table" not in html_content:
+        return parsed_data
+
+    soup = BeautifulSoup(html_content, "html.parser")
+    table_rows = soup.find_all("tr")  # Find all table rows
+
+    for row in table_rows:
+        cells = row.find_all("th") + row.find_all("td")  # Get all headers and data
+        if len(cells) == 2:  # Ensure we have key-value pairs
+            key = cells[0].get_text(strip=True)
+            value = cells[1].get_text(strip=True)
+            parsed_data[key] = value
+
+    return parsed_data
+
+def fetch_hawker_data():
+    """
+    Fetches and formats hawker centre data from the API.
+    Stores name, address, and location in a separate global dictionary.
+    """
+    global hawker_summary  # Use global variable to store summary data
+
+    dataset_id = "d_4a086da0a5553be1d89383cd90d07ecd"
+    url = f"https://api-open.data.gov.sg/v1/public/api/datasets/{dataset_id}/poll-download"
+
+    try:
+        response = requests.get(url)
+        json_data = response.json()
+
+        if json_data['code'] != 0:
+            print(f"Error: {json_data['errMsg']}")
+            return []
+
+        # Fetch the actual data file URL
+        data_url = json_data['data']['url']
+        response = requests.get(data_url)
+        raw_data = response.json()  # JSON response with 'features' key
+
+        formatted_data = []
+        for feature in raw_data.get("features", []):
+            properties = feature.get("properties", {})
+            geometry = feature.get("geometry", {})
+
+            # Extract values normally
+            name = properties.get("Name", "Unknown")
+            description = properties.get("Description", "")
+
+            # Extract key-value pairs from HTML inside `Description`
+            extracted_properties = parse_html_table(description)
+
+            # Combine extracted values with existing properties
+            hawker_centre = {
+                "name": extracted_properties.get("NAME", name),
+                "description": extracted_properties.get("DESCRIPTION", "No description available"),
+                "address": {
+                    "block": extracted_properties.get("ADDRESSBLOCKHOUSENUMBER", "Unknown"),
+                    "street": extracted_properties.get("ADDRESSSTREETNAME", "Unknown"),
+                    "building": extracted_properties.get("ADDRESSBUILDINGNAME", "Unknown"),
+                    "postal_code": extracted_properties.get("ADDRESSPOSTALCODE", "Unknown"),
+                },
+                "status": extracted_properties.get("STATUS", "Unknown"),
+                "photo_url": extracted_properties.get("PHOTOURL", ""),
+                "co_locators": extracted_properties.get("INFO_ON_CO_LOCATORS", ""),
+                "location": {
+                    "latitude": geometry.get("coordinates", [None, None])[1],
+                    "longitude": geometry.get("coordinates", [None, None])[0],
+                }
+            }
+
+            # Store summary details in global dictionary
+            hawker_summary[hawker_centre["name"]] = {
+                "address": hawker_centre["address"],
+                "location": hawker_centre["location"]
+            }
+
+            formatted_data.append(hawker_centre)
+
+        return formatted_data
+
+    except requests.exceptions.RequestException as e:
+        print(f"API Request Failed: {e}")
+        return []
+
+def get_hawker_data():
+    """ Returns the initialized MongoDB collection for hawker centres. """
+    return hawker_summary
+
+def get_user_collection():
+    """ Returns the initialized MongoDB collection for hawker centres. """
+    return user_collection
+
+def init_db():
+    """
+    Initializes MongoDB connection.
+    """
+    global hawker_collection,user_collection,mongo
+
+    if mongo is None:
+        raise ValueError("Mongo instance not initialized. Call init_mongo first.")
+
+    db = mongo.db  # Access the database from the global mongo instance
+
+    # Write data to the correct collection
+    write_data(fetch_hawker_data(), db["hawker_centres"])
+
+    # Store collections globally for easier access
+    hawker_collection = db["hawker_centres"]
+    user_collection = db["Users"]
+
+    return db
+
+
+def write_data(data, collection):
+    """
+    Writes data to the specified MongoDB collection.
+    """
+    if data:
+        try:
+            # Clear existing data to prevent duplicates
+            delete_result = collection.delete_many({})
+            # print(f"Deleted {delete_result.deleted_count} old records in {collection.name}.")
+
+            # Insert new data
+            insert_result = collection.insert_many(data)
+            # print(f"Inserted {len(insert_result.inserted_ids)} new records into {collection.name}.")
+
+        except Exception as e:
+            print(f"Error writing to MongoDB: {e}")
+    else:
+        print(f"No data to write to {collection.name}.")
