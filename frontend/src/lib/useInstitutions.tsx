@@ -1,9 +1,10 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Institution, FilterOptions, SearchState } from './types';
-import { institutions } from './mockData';
+import axios from 'axios';
 
 export const useInstitutions = () => {
+  const [institutions, setInstitutions] = useState<Institution[]>([]);
   const [searchState, setSearchState] = useState<SearchState>({
     query: '',
     filters: {
@@ -17,17 +18,44 @@ export const useInstitutions = () => {
   });
   
   const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-  // In a real app, we would fetch data from CSV here and convert it to JSON
+  // Fetch data from the API
   useEffect(() => {
-    setIsLoading(true);
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    const fetchInstitutions = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/api/institutions/getall');
+        
+        // Check if the response contains the expected data
+        if (response.data && Array.isArray(response.data.data)) {
+          setInstitutions(response.data.data);
+        } else if (Array.isArray(response.data)) {
+          setInstitutions(response.data);
+        } else {
+          throw new Error('Invalid data format received from API');
+        }
+        
+        setError(null);
+      } catch (err) {
+        console.error('Failed to fetch institutions:', err);
+        setError('Failed to load institutions. Please try again later.');
+        
+        // Fallback to mock data in case API fails
+        import('./mockData').then((mockModule) => {
+          console.log('Falling back to mock data...');
+          setInstitutions(mockModule.institutions);
+          setError('Using mock data (API unavailable)');
+        }).catch((mockErr) => {
+          console.error('Failed to load mock data:', mockErr);
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchInstitutions();
   }, []);
   
   const filteredInstitutions = useMemo(() => {
@@ -90,7 +118,7 @@ export const useInstitutions = () => {
       
       return true;
     });
-  }, [searchState]);
+  }, [searchState, institutions]);
   
   const updateSearchQuery = (query: string) => {
     setSearchState(prev => ({
@@ -126,6 +154,7 @@ export const useInstitutions = () => {
   return {
     institutions: filteredInstitutions,
     isLoading,
+    error,
     selectedInstitution,
     setSelectedInstitution,
     searchState,
