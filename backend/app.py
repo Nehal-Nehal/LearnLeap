@@ -7,9 +7,9 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from firebase_admin import auth, credentials, initialize_app
-import firebase_admin
-import pandas as pd
+#from firebase_admin import auth, credentials, initialize_app
+#import firebase_admin
+#import pandas as pd
 from dotenv import load_dotenv
 from routes.institutions import institutions_bp
 from routes.hawker_centres_routes import hawker_bp
