@@ -1,3 +1,5 @@
+/* For Inter font */
+@import url('https://rsms.me/inter/inter.css');
 
 @tailwind base;
 @tailwind components;
@@ -117,5 +119,4 @@
   @apply opacity-100;
 }
 
-/* For Inter font */
-@import url('https://rsms.me/inter/inter.css');
+

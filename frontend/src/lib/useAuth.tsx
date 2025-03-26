@@ -1,6 +1,6 @@
-
 import { useState, createContext, useContext, ReactNode } from 'react';
 import { useToast } from "@/components/ui/use-toast";
+import axios from 'axios';
 
 // Define the user type
 interface User {
@@ -15,6 +15,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInWithCredentials: (username: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -26,21 +27,54 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
-  // Mock sign in with Google function
+  // ✅ New: Sign in using credentials from backend
+  const signInWithCredentials = async (username: string, password: string): Promise<void> => {
+    setLoading(true);
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/login", {
+        username,
+        password,
+      });
+
+      const data = response.data;
+
+      // ✅ You can adjust this structure based on backend response
+      const authenticatedUser: User = {
+        displayName: data.displayName || username,
+        email: data.email || null,
+        photoURL: data.photoURL || null,
+      };
+
+      setUser(authenticatedUser);
+
+      toast({
+        title: "Login successful",
+        description: `Welcome back, ${authenticatedUser.displayName || "User"}!`,
+        variant: "default"
+      });
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.response?.data?.message || "An unknown error occurred.",
+        variant: "destructive"
+      });
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const signInWithGoogle = async (): Promise<void> => {
     setLoading(true);
     try {
-      // For now, create a mock user
       const mockUser: User = {
         uid: 'mock-uid-123',
         displayName: 'Demo User',
         email: 'demo@example.com',
         photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=demo'
       };
-      
-      // Simulate API delay
+
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
       setUser(mockUser);
     } catch (error) {
       toast({
@@ -54,15 +88,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // Mock sign out function
   const signOut = async (): Promise<void> => {
     setLoading(true);
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500));
-      
       setUser(null);
-      
       toast({
         title: "Signed out",
         description: "You have been successfully signed out.",
@@ -80,10 +110,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const value = {
+  const value: AuthContextType = {
     user,
     loading,
     signInWithGoogle,
+    signInWithCredentials,
     signOut
   };
 

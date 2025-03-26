@@ -1,16 +1,15 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuLabel, 
-  DropdownMenuSeparator, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from '@/lib/useAuth';
 import { Button } from './ui/button';
@@ -24,10 +23,10 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
 
-  // Function to check if a path is active
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
+  const isActive = (path: string) => location.pathname === path;
+
+  // ✅ Debug: Check if user is populated
+  console.log("Header user context:", user);
 
   return (
     <header className={cn(
@@ -40,56 +39,37 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
           <p className="text-xs text-muted-foreground">DISCOVER, LEARN, GROW</p>
         </Link>
       </div>
-      
+
       <nav className="hidden md:flex items-center space-x-8">
-        <Link 
-          to="/" 
-          className={cn(
-            "text-sm font-medium transition-colors",
-            isActive('/') ? "text-primary" : "text-foreground hover:text-primary"
-          )}
-        >
-          Home
-        </Link>
-        <Link 
-          to="/about" 
-          className={cn(
-            "text-sm font-medium transition-colors",
-            isActive('/about') ? "text-primary" : "text-foreground hover:text-primary"
-          )}
-        >
-          About
-        </Link>
-        <Link 
-          to="/resources" 
-          className={cn(
-            "text-sm font-medium transition-colors",
-            isActive('/resources') ? "text-primary" : "text-foreground hover:text-primary"
-          )}
-        >
-          Resources
-        </Link>
-        <Link 
-          to="/contact" 
-          className={cn(
-            "text-sm font-medium transition-colors",
-            isActive('/contact') ? "text-primary" : "text-foreground hover:text-primary"
-          )}
-        >
-          Contact
-        </Link>
+        {["/", "/about", "/resources", "/contact"].map((path) => (
+          <Link
+            key={path}
+            to={path}
+            className={cn(
+              "text-sm font-medium transition-colors",
+              isActive(path) ? "text-primary" : "text-foreground hover:text-primary"
+            )}
+          >
+            {path === "/" ? "Home" : path.replace("/", "").charAt(0).toUpperCase() + path.slice(2)}
+          </Link>
+        ))}
       </nav>
-      
+
       <div className="flex items-center space-x-4">
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center space-x-2 rounded-full hover:bg-muted/50 p-1 transition-colors">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user.photoURL || undefined} alt={user.displayName || "User"} />
-                  <AvatarFallback>{user.displayName?.charAt(0) || "U"}</AvatarFallback>
+                  <AvatarImage
+                    src={user.photoURL || "https://api.dicebear.com/7.x/initials/svg?seed=U"}
+                    alt={user.displayName || "User"}
+                  />
+                  <AvatarFallback>{user.displayName?.charAt(0).toUpperCase() || "U"}</AvatarFallback>
                 </Avatar>
-                <span className="text-sm font-medium hidden md:inline-block">{user.displayName || "User"}</span>
+                <span className="text-sm font-medium hidden md:inline-block">
+                  {user.displayName || "User"}
+                </span>
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
