@@ -1,22 +1,39 @@
-// src/pages/Login.jsx
-
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '@/lib/useAuth'; // ✅ Make sure this points to your actual AuthPro
+import { useForm } from 'react-hook-form';
+import { useAuth } from '@/lib/useAuth';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+
+type LoginFormValues = {
+  username: string;
+  password: string;
+};
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // for programmatic routing
-  const { signInWithCredentials } = useAuth(); // ✅ Move this INSIDE the component
+  const navigate = useNavigate();
+  const { signInWithCredentials } = useAuth();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const form = useForm<LoginFormValues>({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (values: LoginFormValues) => {
     try {
-      await signInWithCredentials(username, password);
-      navigate('/'); // ✅ Route to homepage after successful login
-    } catch (error) {
+      await signInWithCredentials(values.username, values.password);
+      navigate('/');
+    } catch (error: any) {
       console.error("Login Error Trace:", error);
       const errorMessage =
         error.response?.data?.message || "An unknown error occurred";
@@ -25,31 +42,59 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="name"
-          required
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Password"
-          required
-        />
-        <button type="submit">Login</button>
-        <Link
-        to="/register"
-        className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Register
-        </Link>
+    <div className="relative min-h-screen bg-muted">
+      {/* Top-left Home Button */}
+      <div className="absolute top-4 left-4">
+        <Button variant="ghost" onClick={() => navigate('/')}>
+          ← Back to Home
+        </Button>
+      </div>
 
-      </form>
+      {/* Centered Login Card */}
+      <div className="max-w-sm mx-auto mt-20 p-6 bg-white rounded shadow">
+        <h2 className="text-xl font-bold mb-4">Login</h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="flex items-center justify-between">
+              <Button type="submit">Login</Button>
+              <Link
+                to="/register"
+                className="text-sm text-blue-500 hover:underline"
+              >
+                Register
+              </Link>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
