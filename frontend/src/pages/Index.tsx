@@ -10,7 +10,7 @@ import InstitutionCard from '@/components/InstitutionCard';
 import InstitutionDetailModal from '@/components/InstitutionDetailModal';
 import Map from '@/components/Map';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, FileText, School, Building, Loader2, MapPin, UserPlus } from 'lucide-react';
+import { GraduationCap, FileText, School, Building, Loader2, MapPin, UserPlus, Scale } from 'lucide-react';
 
 const Index = () => {
   const { 
@@ -105,6 +105,10 @@ const Index = () => {
               <TabsTrigger value="register" className="flex items-center gap-2">
                 <UserPlus className="h-4 w-4" />
                 <span>Registration</span>
+              </TabsTrigger>
+              <TabsTrigger value="compare" className="flex items-center gap-2">
+                <Scale className="h-4 w-4" />
+                <span>Compare</span>
               </TabsTrigger>
             </TabsList>
             
@@ -368,6 +372,56 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="compare" className="mt-0">
+              <div className="bg-white/50 backdrop-blur-sm shadow-sm border border-border/40 rounded-xl p-6">
+                <h2 className="text-xl font-semibold mb-4">Compare Favourited Institutions</h2>
+
+                {favouritedInstitutions.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">You have not favourited any institutions yet.</p>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left border-collapse">
+                      <thead className="bg-muted/50 text-muted-foreground">
+                        <tr>
+                          <th className="px-4 py-2 border">Name</th>
+                          <th className="px-4 py-2 border">Type</th>
+                          <th className="px-4 py-2 border">Location</th>
+                          <th className="px-4 py-2 border">Entry Requirements</th>
+                          <th className="px-4 py-2 border">Courses Offered</th>
+                          <th className="px-4 py-2 border">Special Programs</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {institutions
+                          .filter((inst) => favouritedInstitutions.includes(inst.name))
+                          .map((inst) => (
+                            <tr key={inst.id} className="border-t">
+                              <td className="px-4 py-2 border font-medium">{inst.name}</td>
+                              <td className="px-4 py-2 border">{inst.type}</td>
+                              <td className="px-4 py-2 border">{inst.location}</td>
+                              <td className="px-4 py-2 border">
+                                {inst.entryRequirements?.length > 0
+                                  ? inst.entryRequirements.join(", ")
+                                  : "N/A"}
+                              </td>
+                              <td className="px-4 py-2 border">
+                                {inst.coursesOffered?.length > 0
+                                  ? inst.coursesOffered.slice(0, 3).join(", ") + (inst.coursesOffered.length > 3 ? "..." : "")
+                                  : "N/A"}
+                              </td>
+                              <td className="px-4 py-2 border">
+                                {inst.specialPrograms?.length > 0
+                                  ? inst.specialPrograms.join(", ")
+                                  : "N/A"}
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </TabsContent>
           </Tabs>
