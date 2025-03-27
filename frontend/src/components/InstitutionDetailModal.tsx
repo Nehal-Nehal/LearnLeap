@@ -27,7 +27,7 @@ const InstitutionDetailModal: React.FC<InstitutionDetailModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl p-0 overflow-hidden bg-white/80 backdrop-blur-md">
+      <DialogContent hideClose className="max-w-3xl p-0 overflow-hidden bg-white/80 backdrop-blur-md">
         <div className="relative h-64 w-full">
           <img
             src={institution.imageUrl}
@@ -149,10 +149,6 @@ const InstitutionDetailModal: React.FC<InstitutionDetailModalProps> = ({
               </div>
             </div>
           </div>
-        </div>
-        
-        <div className="px-6 py-4 bg-muted/50 flex justify-end">
-          <Button onClick={onClose}>Close</Button>
         </div>
       </DialogContent>
     </Dialog>

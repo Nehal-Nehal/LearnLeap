@@ -1,25 +1,49 @@
 
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { MapPin, Award, ChevronRight, Info } from 'lucide-react';
+import { MapPin, Award, Info } from 'lucide-react';
 import { Institution } from '@/lib/types';
 import { Button } from '@/components/ui/button';
+import { Heart } from 'lucide-react'; 
+import axios from 'axios';
 
 interface InstitutionCardProps {
   institution: Institution;
   isSelected: boolean;
   onClick: () => void;
   onViewDetails: () => void;
+  isFavourited?: boolean; // new
+  onToggleFavourite?: (institutionName: string, favourited: boolean) => void; // ✅ new
 }
 
 const InstitutionCard: React.FC<InstitutionCardProps> = ({
   institution,
   isSelected,
   onClick,
-  onViewDetails
+  onViewDetails,
+  isFavourited = false, // 💡 alias it here
+  onToggleFavourite, // ✅ Add this here
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const username = localStorage.getItem('username');
+  const isSignedIn = !!username;
 
+  const handleFavourite = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+  
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/api/users/favourite', {
+        username,
+        institution_name: institution.name
+      });
+      if (onToggleFavourite) {
+        onToggleFavourite(institution.name, response.data.favourited);
+      }
+      alert(response.data.message);
+    } catch (error: any) {
+      console.error('Error toggling favourite:', error.response?.data || error.message);
+    }
+  };
   return (
     <div 
       className={cn(
@@ -96,7 +120,22 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
             Details
           </Button>
           
-          <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+          {isSignedIn && (
+            <Button
+              size="sm"
+              variant="ghost"
+              className={cn(
+                "text-xs h-8",
+                isFavourited ? "text-primary" : "text-muted-foreground hover:text-primary"
+              )}
+              onClick={handleFavourite}
+            >
+              <Heart
+                className={cn("h-4 w-4 mr-1", isFavourited && "fill-current")}
+              />
+              {isFavourited ? "Favourited" : "Favourite"}
+            </Button>
+          )}
         </div>
       </div>
       

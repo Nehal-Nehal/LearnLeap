@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
 
       setUser(authenticatedUser);
-
+      localStorage.setItem("username", username); // Save MongoDB ID
       toast({
         title: "Login successful",
         description: `Welcome back, ${authenticatedUser.displayName || "User"}!`,
@@ -98,6 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         description: "You have been successfully signed out.",
         variant: "default"
       });
+      localStorage.removeItem("username");
     } catch (error) {
       toast({
         title: "Sign-out failed",

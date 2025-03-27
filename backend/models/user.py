@@ -10,7 +10,7 @@ class User:
 
     COLLECTION = 'Users'
 
-    def __init__(self, user_id, username, email, password, age=0, is_student=True,account_state=AccountState.ACTIVE):
+    def __init__(self, user_id, username, email, password, age=0, is_student=True, account_state=AccountState.ACTIVE, favourited_institutions=None):
         self.user_id = user_id if user_id else str(ObjectId())
         self.username = username
         self.email = email
@@ -18,9 +18,10 @@ class User:
         self.age = age
         self.is_student = is_student
         self.account_state = account_state
+        self.favourited_institutions = favourited_institutions if favourited_institutions is not None else []
 
     def to_dict(self):
-    #Convert the User object to a dictionary for MongoDB storage
+        # Convert the User object to a dictionary for MongoDB storage
         return {
             "_id": ObjectId(self.user_id) if isinstance(self.user_id, str) else self.user_id,
             "username": self.username,
@@ -28,16 +29,13 @@ class User:
             "password": self.password,
             "age": self.age,
             "is_student": self.is_student,
-            "account_state": self.account_state.value if isinstance(self.account_state, AccountState) else self.account_state
+            "account_state": self.account_state.value if isinstance(self.account_state, AccountState) else self.account_state,
+            "favourited_institutions": self.favourited_institutions
         }
 
     def save(self, db):
-        #Save the user to MongoDB
+        # Save the user to MongoDB
         user_dict = self.to_dict()
-
         result = db.db[self.COLLECTION].insert_one(user_dict)
         self.user_id = str(result.inserted_id)
-        
         return
-
-

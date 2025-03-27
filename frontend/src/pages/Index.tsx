@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
+import axios from 'axios';
 import { useInstitutions } from '@/lib/useInstitutions';
 import { Institution } from '@/lib/types';
 import Header from '@/components/Header';
@@ -26,6 +27,33 @@ const Index = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeTab, setActiveTab] = useState("search");
+  const [favouritedInstitutions, setFavouritedInstitutions] = useState<string[]>([]);
+  const [showOnlyFavourites, setShowOnlyFavourites] = useState(false);
+  const username = localStorage.getItem("username");
+
+  useEffect(() => {
+    const fetchFavourites = async () => {
+      if (!username) return;
+  
+      try {
+        const response = await axios.get(`http://127.0.0.1:5000/api/users/get-favourites?username=${username}`);
+        setFavouritedInstitutions(response.data.favourites || []);
+      } catch (error) {
+        console.error("Failed to load favourites:", error);
+      }
+    };
+  
+    fetchFavourites();
+  }, [username]);
+
+  const handleToggleFavourite = (institutionName: string, favourited: boolean) => {
+    setFavouritedInstitutions((prev) =>
+      favourited
+        ? [...new Set([...prev, institutionName])]
+        : prev.filter((name) => name !== institutionName)
+    );
+  };
+  
 
   const handleCardClick = (institution: Institution) => {
     setSelectedInstitution(institution);
@@ -198,6 +226,8 @@ const Index = () => {
                             isSelected={selectedInstitution?.id === institution.id}
                             onClick={() => handleCardClick(institution)}
                             onViewDetails={() => handleViewDetails(institution)}
+                            isFavourited={favouritedInstitutions.includes(institution.name)}
+                            onToggleFavourite={handleToggleFavourite} // ✅ new
                           />
                         ))}
                       </div>
@@ -210,10 +240,27 @@ const Index = () => {
             {/* Map tab content */}
             <TabsContent value="map" className="mt-0">
               <div className="bg-white/50 backdrop-blur-sm shadow-sm border border-border/40 rounded-xl p-4">
-                <h2 className="text-xl font-semibold mb-4">Institution Locations</h2>
+              <h2 className="text-xl font-semibold mb-4 flex justify-between items-center">
+                  <span>Institution Locations</span>
+                  
+                  {/* ✅ Toggle favourite filter */}
+                  <label className="flex items-center space-x-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={showOnlyFavourites}
+                      onChange={(e) => setShowOnlyFavourites(e.target.checked)}
+                      className="accent-primary"
+                    />
+                    <span>Show only favourited</span>
+                  </label>
+              </h2>
                 <div className="w-full h-[600px]">
                   <Map 
-                    institutions={institutions}
+                    institutions={
+                      showOnlyFavourites
+                        ? institutions.filter((inst) => favouritedInstitutions.includes(inst.name))
+                        : institutions
+                    }
                     selectedInstitution={selectedInstitution}
                     onMarkerClick={handleCardClick}
                   />

@@ -5,6 +5,7 @@ import requests
 hawker_collection = None
 user_collection = None
 hawker_summary = {}
+
 def init_mongo(mongo_instance):
     global mongo
     mongo = mongo_instance
