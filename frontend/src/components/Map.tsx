@@ -93,7 +93,7 @@ const Map: React.FC<MapProps> = ({
         <Marker
           key={inst.id}
           position={{ lat: inst.latitude, lng: inst.longitude }}
-          label={inst.name}
+          label={inst.school_name}
           onClick={() => onMarkerClick(inst)}
         />
       ))}

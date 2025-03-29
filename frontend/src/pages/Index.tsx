@@ -19,6 +19,7 @@ const Index = () => {
     selectedInstitution,
     setSelectedInstitution,
     searchState,
+    filterOptions, // Make sure to get this from useInstitutions
     updateSearchQuery,
     updateFilters,
     resetFilters
@@ -119,6 +120,7 @@ const Index = () => {
                 <div className="lg:col-span-1 space-y-6">
                   <FilterSection 
                     filters={searchState.filters}
+                    filterOptions={filterOptions} // Pass the filter options
                     onChange={updateFilters}
                     onReset={resetFilters}
                   />
