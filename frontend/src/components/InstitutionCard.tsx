@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { MapPin, Award, Info } from 'lucide-react';
@@ -12,8 +11,8 @@ interface InstitutionCardProps {
   isSelected: boolean;
   onClick: () => void;
   onViewDetails: () => void;
-  isFavourited?: boolean; // new
-  onToggleFavourite?: (institutionName: string, favourited: boolean) => void; // ✅ new
+  isFavourited?: boolean;
+  onToggleFavourite?: (institutionName: string, favourited: boolean) => void;
 }
 
 const InstitutionCard: React.FC<InstitutionCardProps> = ({
@@ -21,8 +20,8 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
   isSelected,
   onClick,
   onViewDetails,
-  isFavourited = false, // 💡 alias it here
-  onToggleFavourite, // ✅ Add this here
+  isFavourited = false,
+  onToggleFavourite,
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const username = localStorage.getItem('username');
@@ -34,10 +33,10 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
     try {
       const response = await axios.post('http://127.0.0.1:5000/api/users/favourite', {
         username,
-        institution_name: institution.name
+        institution_name: institution.school_name // Changed from institution.name
       });
       if (onToggleFavourite) {
-        onToggleFavourite(institution.name, response.data.favourited);
+        onToggleFavourite(institution.school_name, response.data.favourited); // Changed from institution.name
       }
       alert(response.data.message);
     } catch (error: any) {
@@ -52,16 +51,16 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
       )}
       onClick={onClick}
     >
-      <div className="relative h-40 overflow-hidden rounded-t-xl">
+      <div className="relative h-48 overflow-hidden rounded-t-xl">
         <div className={cn(
           "absolute inset-0 bg-gray-200 animate-pulse",
           imageLoaded && "animate-none bg-transparent"
         )} />
         <img
-          src={institution.imageUrl}
-          alt={institution.name}
+          src={institution.school_image}
+          alt={institution.school_name}
           className={cn(
-            "lazy-image w-full h-full object-cover transition-all duration-700",
+            "lazy-image w-full h-full object-contain transition-all duration-700",
             imageLoaded && "loaded"
           )}
           onLoad={() => setImageLoaded(true)}
@@ -70,7 +69,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
         
         <div className="absolute bottom-0 left-0 p-3 flex items-center">
           <span className="px-2 py-1 rounded-full text-xs font-medium bg-white/90 text-foreground">
-            {institution.type}
+            {institution.school_level} {/* Changed from institution.type */}
           </span>
         </div>
         
@@ -83,25 +82,25 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
       </div>
       
       <div className="p-4">
-        <h3 className="font-medium line-clamp-1">{institution.name}</h3>
+        <h3 className="font-medium line-clamp-1">{institution.school_name}</h3> {/* Changed from institution.name */}
         
         <div className="flex items-center mt-2 text-sm text-muted-foreground">
           <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
-          <span>{institution.location}</span>
+          <span>{institution.address}</span> {/* Changed from institution.location */}
         </div>
         
         <div className="mt-3 flex flex-wrap gap-1">
-          {institution.coursesOffered.slice(0, 3).map((course, index) => (
+          {institution.subjects.slice(0, 3).map((subject, index) => ( // Changed from institution.coursesOffered
             <span 
               key={index}
               className="text-xs px-2 py-0.5 bg-muted rounded-full"
             >
-              {course}
+              {subject}
             </span>
           ))}
-          {institution.coursesOffered.length > 3 && (
+          {institution.subjects.length > 3 && ( // Changed from institution.coursesOffered
             <span className="text-xs px-2 py-0.5 bg-muted rounded-full">
-              +{institution.coursesOffered.length - 3} more
+              +{institution.subjects.length - 3} more
             </span>
           )}
         </div>

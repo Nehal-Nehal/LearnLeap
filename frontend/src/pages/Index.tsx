@@ -19,6 +19,7 @@ const Index = () => {
     selectedInstitution,
     setSelectedInstitution,
     searchState,
+    filterOptions, // Make sure to get this from useInstitutions
     updateSearchQuery,
     updateFilters,
     resetFilters
@@ -119,6 +120,7 @@ const Index = () => {
                 <div className="lg:col-span-1 space-y-6">
                   <FilterSection 
                     filters={searchState.filters}
+                    filterOptions={filterOptions} // Pass the filter options
                     onChange={updateFilters}
                     onReset={resetFilters}
                   />
@@ -230,7 +232,7 @@ const Index = () => {
                             isSelected={selectedInstitution?.id === institution.id}
                             onClick={() => handleCardClick(institution)}
                             onViewDetails={() => handleViewDetails(institution)}
-                            isFavourited={favouritedInstitutions.includes(institution.name)}
+                            isFavourited={favouritedInstitutions.includes(institution.school_name)}
                             onToggleFavourite={handleToggleFavourite} // ✅ new
                           />
                         ))}
@@ -262,7 +264,7 @@ const Index = () => {
                   <Map 
                     institutions={
                       showOnlyFavourites
-                        ? institutions.filter((inst) => favouritedInstitutions.includes(inst.name))
+                        ? institutions.filter((inst) => favouritedInstitutions.includes(inst.school_name))
                         : institutions
                     }
                     selectedInstitution={selectedInstitution}
@@ -388,33 +390,39 @@ const Index = () => {
                           <th className="px-4 py-2 border">Name</th>
                           <th className="px-4 py-2 border">Type</th>
                           <th className="px-4 py-2 border">Location</th>
-                          <th className="px-4 py-2 border">Entry Requirements</th>
-                          <th className="px-4 py-2 border">Courses Offered</th>
+                          <th className="px-4 py-2 border">Subjects</th>
+                          <th className="px-4 py-2 border">CCA</th>
                           <th className="px-4 py-2 border">Special Programs</th>
                         </tr>
                       </thead>
                       <tbody>
                         {institutions
-                          .filter((inst) => favouritedInstitutions.includes(inst.name))
+                          .filter((inst) => favouritedInstitutions.includes(inst.school_name))
                           .map((inst) => (
                             <tr key={inst.id} className="border-t">
-                              <td className="px-4 py-2 border font-medium">{inst.name}</td>
-                              <td className="px-4 py-2 border">{inst.type}</td>
-                              <td className="px-4 py-2 border">{inst.location}</td>
+                              <td className="px-4 py-2 border font-medium">{inst.school_name}</td>
+                              <td className="px-4 py-2 border">{inst.school_type}</td>
                               <td className="px-4 py-2 border">
-                                {inst.entryRequirements?.length > 0
-                                  ? inst.entryRequirements.join(", ")
+                                {inst.address}, S({inst.postal_code})
+                              </td>
+                              <td className="px-4 py-2 border">
+                                {inst.subjects?.length > 0
+                                  ? inst.subjects.slice(0, 3).join(", ") + (inst.subjects.length > 3 ? "..." : "")
                                   : "N/A"}
                               </td>
                               <td className="px-4 py-2 border">
-                                {inst.coursesOffered?.length > 0
-                                  ? inst.coursesOffered.slice(0, 3).join(", ") + (inst.coursesOffered.length > 3 ? "..." : "")
+                                {inst.CCA?.length > 0
+                                  ? inst.CCA.slice(0, 3).join(", ") + (inst.CCA.length > 3 ? "..." : "")
                                   : "N/A"}
                               </td>
                               <td className="px-4 py-2 border">
-                                {inst.specialPrograms?.length > 0
-                                  ? inst.specialPrograms.join(", ")
-                                  : "N/A"}
+                                {[...(inst.school_distinctive_programmes || []), ...(inst.MOE_programmes || [])]
+                                  .slice(0, 3)
+                                  .join(", ") + (
+                                    (inst.school_distinctive_programmes?.length || 0) + (inst.MOE_programmes?.length || 0) > 3
+                                      ? "..."
+                                      : ""
+                                  ) || "N/A"}
                               </td>
                             </tr>
                           ))}
