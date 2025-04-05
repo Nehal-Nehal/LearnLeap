@@ -51,16 +51,16 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
       )}
       onClick={onClick}
     >
-      <div className="relative h-40 overflow-hidden rounded-t-xl">
+      <div className="relative h-48 overflow-hidden rounded-t-xl">
         <div className={cn(
           "absolute inset-0 bg-gray-200 animate-pulse",
           imageLoaded && "animate-none bg-transparent"
         )} />
         <img
-          src={institution.school_image} // Changed from institution.imageUrl
-          alt={institution.school_name} // Changed from institution.name
+          src={institution.school_image}
+          alt={institution.school_name}
           className={cn(
-            "lazy-image w-full h-full object-cover transition-all duration-700",
+            "lazy-image w-full h-full object-contain transition-all duration-700",
             imageLoaded && "loaded"
           )}
           onLoad={() => setImageLoaded(true)}
