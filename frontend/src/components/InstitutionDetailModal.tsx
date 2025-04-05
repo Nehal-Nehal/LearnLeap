@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { X, MapPin, Award, BookOpen, Users, Dumbbell, Sparkles, Phone, Mail, Globe, Bus, Train } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, MapPin, Award, BookOpen, Users, Dumbbell, Sparkles, Phone, Mail, Globe, Bus, Train, MapIcon } from 'lucide-react';
 import { Institution } from '@/lib/types';
 import {
   Dialog,
@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import NavigatingMap from './NavigatingMap'; // Import the NavigatingMap component
 
 interface InstitutionDetailModalProps {
   institution: Institution | null;
@@ -23,6 +25,8 @@ const InstitutionDetailModal: React.FC<InstitutionDetailModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const [activeTab, setActiveTab] = useState('about');
+  
   if (!institution) return null;
 
   const officialWebsite = institution['official website'] || institution.official_website || '';
@@ -31,7 +35,11 @@ const InstitutionDetailModal: React.FC<InstitutionDetailModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
         hideClose 
-        className="max-w-3xl p-0 overflow-hidden bg-white/80 backdrop-blur-md max-h-[85vh] flex flex-col"
+        className={`p-0 overflow-hidden bg-white/80 backdrop-blur-md flex flex-col transition-all duration-300 ${
+          activeTab === 'navigate' 
+            ? 'max-w-[95vw] max-h-[95vh] w-[95vw] h-[95vh]' 
+            : 'max-w-3xl max-h-[90vh]'
+        }`}
       >
         {/* Fixed header section with image */}
         <div className="relative h-52 w-full flex-shrink-0">
@@ -74,213 +82,256 @@ const InstitutionDetailModal: React.FC<InstitutionDetailModalProps> = ({
           </div>
         </div>
         
-        {/* Scrollable content section */}
-        <div className="overflow-y-auto px-6 py-4 flex-grow">
-          <DialogHeader className="mb-4">
-            <DialogTitle className="text-xl">About</DialogTitle>
-            <DialogDescription>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mt-2">
-                <div className="flex">
-                  <span className="font-medium mr-2">School Type:</span> 
-                  <span>{institution.school_type}</span>
-                </div>
-                <div className="flex">
-                  <span className="font-medium mr-2">Zone:</span> 
-                  <span>{institution.zone}</span>
-                </div>
-                <div className="flex">
-                  <span className="font-medium mr-2">Postal Code:</span> 
-                  <span>{institution.postal_code}</span>
-                </div>
-                <div className="flex">
-                  <span className="font-medium mr-2">Area:</span> 
-                  <span>{institution.DGP_area}</span>
-                </div>
-              </div>
-            </DialogDescription>
-          </DialogHeader>
+        {/* Tabs navigation */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-grow flex flex-col overflow-hidden">
+          <div className="px-6 pt-4">
+            <TabsList className="w-full">
+              <TabsTrigger value="about" className="flex items-center gap-1">
+                <BookOpen className="h-4 w-4" />
+                <span>About</span>
+              </TabsTrigger>
+              <TabsTrigger value="navigate" className="flex items-center gap-1">
+                <MapIcon className="h-4 w-4" />
+                <span>Navigate</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
           
-           {/* Contact Information Section */}
-           <div className="mb-6">
-            <h3 className="text-md font-medium mb-2">Contact Information</h3>
-            <div className="grid grid-cols-1 gap-4 text-sm">
-              <div className="flex items-center">
-                <Phone className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
-                <span>
-                  {institution.telephone_no}
-                  {institution.telephone_no_2 && institution.telephone_no_2 !== 'na' && `, ${institution.telephone_no_2}`}
-                </span>
-              </div>
-              <div className="flex items-center">
-                <Mail className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
-                <a href={`mailto:${institution.email_address}`} className="hover:underline truncate">
-                  {institution.email_address}
-                </a>
-              </div>
-              {officialWebsite && (
+          {/* About tab content - Scrollable content section */}
+          <TabsContent value="about" className="px-6 py-4 overflow-y-auto flex-grow">
+            <DialogHeader className="mb-4">
+              <DialogTitle className="text-xl">About</DialogTitle>
+              <DialogDescription>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mt-2">
+                  <div className="flex">
+                    <span className="font-medium mr-2">School Type:</span> 
+                    <span>{institution.school_type}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="font-medium mr-2">Zone:</span> 
+                    <span>{institution.zone}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="font-medium mr-2">Postal Code:</span> 
+                    <span>{institution.postal_code}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="font-medium mr-2">Area:</span> 
+                    <span>{institution.DGP_area}</span>
+                  </div>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+            
+            {/* Contact Information Section */}
+            <div className="mb-6">
+              <h3 className="text-md font-medium mb-2">Contact Information</h3>
+              <div className="grid grid-cols-1 gap-4 text-sm">
                 <div className="flex items-center">
-                  <Globe className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
-                  <a 
-                    href={officialWebsite.startsWith('http') ? officialWebsite : `https://${officialWebsite}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="hover:underline text-primary"
-                  >
-                    {officialWebsite}
+                  <Phone className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
+                  <span>
+                    {institution.telephone_no}
+                    {institution.telephone_no_2 && institution.telephone_no_2 !== 'na' && `, ${institution.telephone_no_2}`}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
+                  <a href={`mailto:${institution.email_address}`} className="hover:underline truncate">
+                    {institution.email_address}
                   </a>
                 </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Administration Section */}
-          <div className="mb-6">
-            <h3 className="text-md font-medium mb-2">Administration</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="font-medium">Principal:</span> {institution.principal}
-              </div>
-              {institution.vice_principles && institution.vice_principles.length > 0 && (
-                <div>
-                  <span className="font-medium">Vice Principal{institution.vice_principles.length > 1 ? 's' : ''}:</span>
-                  <ul className="list-disc list-inside ml-2">
-                    {institution.vice_principles.map((vp, index) => (
-                      <li key={index}>{vp}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          {/* Transportation Section */}
-          <div className="mb-6">
-            <h3 className="text-md font-medium mb-2">Transportation</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="flex items-start">
-                <Bus className="h-4 w-4 mr-2 text-primary mt-0.5" />
-                <div>
-                  <span className="font-medium">Bus Services:</span>
-                  <p>{institution.bus_desc}</p>
-                </div>
-              </div>
-              <div className="flex items-start">
-                <Train className="h-4 w-4 mr-2 text-primary mt-0.5" />
-                <div>
-                  <span className="font-medium">MRT/LRT:</span>
-                  <p>{institution.mrt_desc}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <Separator className="my-4" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left column */}
-            <div className="space-y-4">
-              <div>
-                <h3 className="flex items-center text-sm font-medium mb-2">
-                  <BookOpen className="h-4 w-4 mr-1 text-primary" />
-                  Subjects
-                </h3>
-                <div className="flex flex-wrap gap-1 max-h-40 overflow-y-auto">
-                  {institution.subjects.map((subject, index) => (
-                    <span 
-                      key={index}
-                      className="text-xs px-2 py-1 bg-muted rounded-full"
+                {officialWebsite && (
+                  <div className="flex items-center">
+                    <Globe className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
+                    <a 
+                      href={officialWebsite.startsWith('http') ? officialWebsite : `https://${officialWebsite}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="hover:underline text-primary"
                     >
-                      {subject}
-                    </span>
-                  ))}
-                </div>
+                      {officialWebsite}
+                    </a>
+                  </div>
+                )}
               </div>
-              
-              <Separator />
-              
-              <div>
-                <h3 className="flex items-center text-sm font-medium mb-2">
-                  <Users className="h-4 w-4 mr-1 text-primary" />
-                  Co-Curricular Activities
-                </h3>
-                <div className="flex flex-wrap gap-1 max-h-40 overflow-y-auto">
-                  {institution.CCA.map((activity, index) => (
-                    <span 
-                      key={index}
-                      className="text-xs px-2 py-1 bg-muted rounded-full"
-                    >
-                      {activity}
-                    </span>
-                  ))}
+            </div>
+            
+            {/* Administration Section */}
+            <div className="mb-6">
+              <h3 className="text-md font-medium mb-2">Administration</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium">Principal:</span> {institution.principal}
+                </div>
+                {institution.vice_principles && institution.vice_principles.length > 0 && (
+                  <div>
+                    <span className="font-medium">Vice Principal{institution.vice_principles.length > 1 ? 's' : ''}:</span>
+                    <ul className="list-disc list-inside ml-2">
+                      {institution.vice_principles.map((vp, index) => (
+                        <li key={index}>{vp}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Transportation Section */}
+            <div className="mb-6">
+              <h3 className="text-md font-medium mb-2">Transportation</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="flex items-start">
+                  <Bus className="h-4 w-4 mr-2 text-primary mt-0.5" />
+                  <div>
+                    <span className="font-medium">Bus Services:</span>
+                    <p>{institution.bus_desc}</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <Train className="h-4 w-4 mr-2 text-primary mt-0.5" />
+                  <div>
+                    <span className="font-medium">MRT/LRT:</span>
+                    <p>{institution.mrt_desc}</p>
+                  </div>
                 </div>
               </div>
             </div>
             
-            {/* Right column */}
-            <div className="space-y-4">
-              <div>
-                <h3 className="flex items-center text-sm font-medium mb-2">
-                  <Dumbbell className="h-4 w-4 mr-1 text-primary" />
-                  Mother Tongue Languages
-                </h3>
-                <div className="flex flex-wrap gap-1">
-                  {institution.mother_tongue.map((language, index) => (
-                    <span 
-                      key={index}
-                      className="text-xs px-2 py-1 bg-muted rounded-full"
-                    >
-                      {language}
-                    </span>
-                  ))}
+            <Separator className="my-4" />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Left column */}
+              <div className="space-y-4">
+                <div>
+                  <h3 className="flex items-center text-sm font-medium mb-2">
+                    <BookOpen className="h-4 w-4 mr-1 text-primary" />
+                    Subjects
+                  </h3>
+                  <div className="flex flex-wrap gap-1 max-h-40 overflow-y-auto">
+                    {institution.subjects.map((subject, index) => (
+                      <span 
+                        key={index}
+                        className="text-xs px-2 py-1 bg-muted rounded-full"
+                      >
+                        {subject}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <Separator />
+                
+                <div>
+                  <h3 className="flex items-center text-sm font-medium mb-2">
+                    <Users className="h-4 w-4 mr-1 text-primary" />
+                    Co-Curricular Activities
+                  </h3>
+                  <div className="flex flex-wrap gap-1 max-h-40 overflow-y-auto">
+                    {institution.CCA.map((activity, index) => (
+                      <span 
+                        key={index}
+                        className="text-xs px-2 py-1 bg-muted rounded-full"
+                      >
+                        {activity}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
               
-              <Separator />
-              
-              <div>
-                <h3 className="flex items-center text-sm font-medium mb-2">
-                  <Sparkles className="h-4 w-4 mr-1 text-primary" />
-                  Distinctive Programs
-                </h3>
-                <div className="max-h-32 overflow-y-auto">
-                  {institution.school_distinctive_programmes.length > 0 ? (
-                    <ul className="space-y-1">
-                      {institution.school_distinctive_programmes.map((program, index) => (
-                        <li key={index} className="text-sm flex items-center">
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary/70 mr-2 flex-shrink-0" />
-                          {program}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">No distinctive programs listed</p>
-                  )}
+              {/* Right column */}
+              <div className="space-y-4">
+                <div>
+                  <h3 className="flex items-center text-sm font-medium mb-2">
+                    <Dumbbell className="h-4 w-4 mr-1 text-primary" />
+                    Mother Tongue Languages
+                  </h3>
+                  <div className="flex flex-wrap gap-1">
+                    {institution.mother_tongue.map((language, index) => (
+                      <span 
+                        key={index}
+                        className="text-xs px-2 py-1 bg-muted rounded-full"
+                      >
+                        {language}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              <div>
-                <h3 className="flex items-center text-sm font-medium mb-2">
-                  <Sparkles className="h-4 w-4 mr-1 text-primary" />
-                  MOE Programs
-                </h3>
-                <div className="max-h-32 overflow-y-auto">
-                  {institution.MOE_programmes.length > 0 ? (
-                    <ul className="space-y-1">
-                      {institution.MOE_programmes.map((program, index) => (
-                        <li key={index} className="text-sm flex items-center">
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary/70 mr-2 flex-shrink-0" />
-                          {program}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">No MOE programs listed</p>
-                  )}
+                
+                <Separator />
+                
+                <div>
+                  <h3 className="flex items-center text-sm font-medium mb-2">
+                    <Sparkles className="h-4 w-4 mr-1 text-primary" />
+                    Distinctive Programs
+                  </h3>
+                  <div className="max-h-32 overflow-y-auto">
+                    {institution.school_distinctive_programmes.length > 0 ? (
+                      <ul className="space-y-1">
+                        {institution.school_distinctive_programmes.map((program, index) => (
+                          <li key={index} className="text-sm flex items-center">
+                            <span className="h-1.5 w-1.5 rounded-full bg-primary/70 mr-2 flex-shrink-0" />
+                            {program}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No distinctive programs listed</p>
+                    )}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="flex items-center text-sm font-medium mb-2">
+                    <Sparkles className="h-4 w-4 mr-1 text-primary" />
+                    MOE Programs
+                  </h3>
+                  <div className="max-h-32 overflow-y-auto">
+                    {institution.MOE_programmes.length > 0 ? (
+                      <ul className="space-y-1">
+                        {institution.MOE_programmes.map((program, index) => (
+                          <li key={index} className="text-sm flex items-center">
+                            <span className="h-1.5 w-1.5 rounded-full bg-primary/70 mr-2 flex-shrink-0" />
+                            {program}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No MOE programs listed</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </TabsContent>
+          
+          {/* Navigate tab content */}
+          <TabsContent value="navigate" className="flex-grow overflow-hidden flex flex-col">
+            <div className="p-4 flex-grow flex flex-col">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h3 className="text-lg font-medium">Navigate to {institution.school_name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Get directions to this institution from your current location or any starting point.
+                  </p>
+                </div>
+                <div className="flex gap-3 text-sm">
+                  <div className="flex items-center">
+                    <Bus className="h-4 w-4 mr-1 text-primary" />
+                    <span>{institution.bus_desc}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Train className="h-4 w-4 mr-1 text-primary" />
+                    <span>{institution.mrt_desc}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-grow w-full rounded-md overflow-hidden" style={{ minHeight: "80vh" }}>
+                <NavigatingMap institution={institution} height="100%" />
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </DialogContent>
     </Dialog>
   );
