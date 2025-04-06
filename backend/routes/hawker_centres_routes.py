@@ -7,7 +7,7 @@ hawker_summary = {}
 hawker_bp = Blueprint("hawker", __name__)
 
 @hawker_bp.route('/nearby-hawkers/<float:latitude>/<float:longitude>/<float:radius>', methods=['GET'])
-@hawker_bp.route('/nearby-hawkers/<float:latitude>/<float:longitude>', methods=['GET'])
+@hawker_bp.route('/nearby-hawkers/<float:latitude>/<float:longitude>/<int:radius>', methods=['GET'])
 def find_nearby_hawkers(latitude, longitude, radius=1.0):
     """
     Find hawker centers near a specific location.

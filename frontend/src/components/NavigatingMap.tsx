@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 interface NavigatingMapProps {
   institution: {
@@ -11,7 +12,24 @@ interface NavigatingMapProps {
   width?: string;
 }
 
-// API Service for getCurrentLocation
+// Define the hawker center structure based on API response
+interface HawkerCenter {
+  name: string;
+  address: {
+    block: string;
+    building: string;
+    postal_code: string;
+    street: string;
+  };
+  distance: number;
+  full_address: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+// API Service for getCurrentLocation and hawker centers
 const APIService = {
   getCurrentLocation: async () => {
     try {
@@ -30,6 +48,31 @@ const APIService = {
       };
     } catch (error) {
       console.error('Error getting location:', error);
+      throw error;
+    }
+  },
+  
+  getNearbyHawkers: async (latitude: number, longitude: number, radius: number = 1.0) => {
+    try {
+      // Round coordinates to 5 decimal places to avoid precision issues
+      const roundedLat = parseFloat(latitude.toFixed(5));
+      const roundedLng = parseFloat(longitude.toFixed(5));
+      
+      // Make sure radius is a float with at least one decimal place
+      // This ensures we don't get 404 errors with whole numbers
+      const formattedRadius = parseFloat(radius.toFixed(1));
+      
+      const response = await axios.get(`http://127.0.0.1:5000/nearby-hawkers/${roundedLat}/${roundedLng}/${formattedRadius}`);
+      
+      // Check if response has the expected structure
+      if (response.data && response.data.data) {
+        return response.data.data as HawkerCenter[];
+      } else {
+        console.warn('Unexpected API response format:', response.data);
+        return []; // Return empty array instead of throwing
+      }
+    } catch (error) {
+      console.error('Error fetching nearby hawker centers:', error);
       throw error;
     }
   }
@@ -56,6 +99,10 @@ const NavigatingMap: React.FC<NavigatingMapProps> = ({
   } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hawkerCenters, setHawkerCenters] = useState<HawkerCenter[]>([]);
+  const [hawkerRadius, setHawkerRadius] = useState<number>(1.0);
+  const [showingHawkers, setShowingHawkers] = useState(false);
+  const [hawkerMarkers, setHawkerMarkers] = useState<google.maps.Marker[]>([]);
   const apiKey = ''; // Consider moving this to env variable
 
   // Initialize the map when component mounts
@@ -75,6 +122,7 @@ const NavigatingMap: React.FC<NavigatingMapProps> = ({
 
     return () => {
       // Clean up if needed
+      clearHawkerMarkers();
     };
   }, []);
 
@@ -172,6 +220,159 @@ const NavigatingMap: React.FC<NavigatingMapProps> = ({
 
   const getDirections = () => {
     calculateAndDisplayRoute();
+  };
+  
+  // Function to find and display nearby hawker centers
+  const findNearbyHawkers = async () => {
+    if (!map) return;
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Clear any existing hawker markers
+      clearHawkerMarkers();
+      
+      // Use the institution's coordinates
+      let latitude = institution.latitude;
+      let longitude = institution.longitude;
+      
+      console.log(`Finding hawkers near: ${latitude}, ${longitude} with radius ${hawkerRadius}km`);
+      
+      // Create an info window that will be reused for all markers
+      const infoWindow = new google.maps.InfoWindow();
+      
+      // Fetch nearby hawker centers from API
+      const hawkerData = await APIService.getNearbyHawkers(latitude, longitude, hawkerRadius);
+      console.log('Hawker API response:', hawkerData);
+      
+      // Check if we got valid data back
+      if (!hawkerData || !Array.isArray(hawkerData) || hawkerData.length === 0) {
+        setError('No hawker centers found within the specified radius. Try increasing the search area.');
+        setHawkerCenters([]);
+        setShowingHawkers(false);
+        return;
+      }
+      
+      // Store the results
+      setHawkerCenters(hawkerData);
+      setShowingHawkers(true);
+      
+      // Success message
+      console.log(`Found ${hawkerData.length} hawker centers`);
+      
+      // Create markers for each hawker center
+      const markers: google.maps.Marker[] = [];
+      
+      hawkerData.forEach(hawker => {
+        // Make sure we have valid coordinates
+        if (!hawker.location || typeof hawker.location.latitude !== 'number' || typeof hawker.location.longitude !== 'number') {
+          console.warn('Invalid location data for hawker center:', hawker.name);
+          return; // Skip this hawker center
+        }
+        
+        const marker = new google.maps.Marker({
+          position: { 
+            lat: hawker.location.latitude, 
+            lng: hawker.location.longitude 
+          },
+          map: map,
+          title: hawker.name,
+          icon: {
+            url: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+            scaledSize: new google.maps.Size(32, 32)
+          },
+          animation: google.maps.Animation.DROP
+        });
+        
+        // Add click listener to show hawker center info
+        marker.addListener('click', () => {
+          const content = `
+            <div style="padding: 8px; max-width: 200px;">
+              <h3 style="font-weight: bold; margin-bottom: 5px;">${hawker.name}</h3>
+              <p style="font-size: 12px; margin-bottom: 5px;">${hawker.full_address}</p>
+              <p style="font-size: 12px; color: #666;">Distance: ${hawker.distance.toFixed(2)} km</p>
+              <button 
+                id="directions-btn" 
+                style="background: #3B82F6; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; margin-top: 5px;"
+              >
+                Get Directions
+              </button>
+            </div>
+          `;
+          
+          infoWindow.setContent(content);
+          infoWindow.open(map, marker);
+          
+          // Add a slight delay to ensure the DOM is ready
+          setTimeout(() => {
+            // Add click event to the Get Directions button
+            const directionsBtn = document.getElementById('directions-btn');
+            if (directionsBtn) {
+              directionsBtn.addEventListener('click', () => {
+                // Set the hawker center as the end location
+                setEndLocation(hawker.name);
+                calculateAndDisplayRoute();
+                infoWindow.close();
+              });
+            }
+          }, 100);
+        });
+        
+        markers.push(marker);
+      });
+      
+      // Store markers so they can be cleared later
+      setHawkerMarkers(markers);
+      
+      // If we found hawker centers, fit the map bounds to show all of them
+      if (hawkerData.length > 0 && markers.length > 0) {
+        const bounds = new google.maps.LatLngBounds();
+        markers.forEach(marker => bounds.extend(marker.getPosition()!));
+        
+        // Also include the institution in the bounds
+        bounds.extend({ lat: institution.latitude, lng: institution.longitude });
+        
+        map.fitBounds(bounds);
+        
+        // Clear any error since we successfully displayed hawker centers
+        setError(null);
+      } else if (hawkerData.length > 0 && markers.length === 0) {
+        // We had data but couldn't create markers
+        setError('Found hawker centers but could not place them on map due to invalid coordinates.');
+      } else {
+        setError('No hawker centers found within the specified radius. Try increasing the search area.');
+      }
+      
+    } catch (error: any) {
+      console.error('Error finding nearby hawker centers:', error);
+      
+      // Clear any previous markers
+      clearHawkerMarkers();
+      
+      // Extract more specific error information if available
+      const statusCode = error.response?.status;
+      const errorMessage = error.response?.data?.message || error.message;
+      
+      if (statusCode === 404) {
+        setError(`API endpoint not found. Please check the server is running.`);
+      } else {
+        setError(`API error: ${errorMessage}`);
+      }
+      
+      // If no hawkers were found, clear any previous results
+      setHawkerCenters([]);
+      setShowingHawkers(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Function to clear hawker center markers from the map
+  const clearHawkerMarkers = () => {
+    hawkerMarkers.forEach(marker => marker.setMap(null));
+    setHawkerMarkers([]);
+    setShowingHawkers(false);
   };
 
   const calculateAndDisplayRoute = () => {
@@ -298,6 +499,60 @@ const NavigatingMap: React.FC<NavigatingMapProps> = ({
               <option value="TRANSIT">🚌 Transit</option>
               <option value="TWO_WHEELER">🛵 Two-Wheeler</option>
             </select>
+          </div>
+          
+          {/* Hawker Centers Search */}
+          <div className="mt-3 pt-3 border-t border-gray-200">
+            <div className="mb-2">
+              <h3 className="font-medium mb-2">Find Nearby Food Options</h3>
+              <div className="flex items-center mb-2">
+                <span className="text-xs mr-2">Search radius (km):</span>
+                <input 
+                  type="number" 
+                  min="0.1" 
+                  max="5" 
+                  step="0.1" 
+                  value={hawkerRadius} 
+                  onChange={(e) => setHawkerRadius(parseFloat(e.target.value))}
+                  className="w-16 px-2 py-1 border rounded text-sm"
+                />
+              </div>
+            </div>
+            
+            <div className="flex space-x-2">
+              {!showingHawkers ? (
+                <button
+                  onClick={findNearbyHawkers}
+                  disabled={isLoading}
+                  className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded text-sm transition-colors disabled:opacity-50"
+                >
+                  {isLoading ? 'Loading...' : 'Show Hawker Centers'}
+                </button>
+              ) : (
+                <button
+                  onClick={clearHawkerMarkers}
+                  className="flex-1 bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm transition-colors"
+                >
+                  Hide Hawker Centers
+                </button>
+              )}
+            </div>
+            
+            {/* Hawker centers info */}
+            {hawkerCenters.length > 0 ? (
+              <div className="mt-2 bg-green-50 p-2 rounded text-sm">
+                <p className="font-medium mb-1 text-green-800">
+                  Found {hawkerCenters.length} hawker centers
+                </p>
+                <p className="text-xs text-green-700">
+                  Click on a marker to see details and get directions
+                </p>
+              </div>
+            ) : error ? (
+              <div className="mt-2 bg-red-50 p-2 rounded text-sm">
+                <p className="text-red-700">{error}</p>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
