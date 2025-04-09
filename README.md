@@ -2,7 +2,7 @@
 
 **LearnLeap** is a user-friendly web platform that enables students and parents in Singapore to search, compare, and navigate educational institutions. It consolidates fragmented information and leverages open data and filtering for personalized discovery.
 
-📍 Developed as part of SC2006 Software Engineering and Architecture by Team 4  
+📌 Developed as part of SC2006 Software Engineering and Architecture by Team 4  
 🔗 [GitHub Repository](https://github.com/softwarelab3/2006-SCEA-I4)
 
 ---
@@ -13,30 +13,30 @@ Educational institution information in Singapore is fragmented, and many institu
 
 ---
 
-## 💡 Our Solution
+## 📌 Our Solution
 
 LearnLeap centralizes school, college, and university data in a single platform. It enhances accessibility and transparency by integrating open datasets and modern UX features, helping users filter institutions and access key details with ease.
 
 ---
 
-## ✨ Key Features
+## 📌 Key Features
 
-- 🔍 **Comprehensive Search & Filtering**
-- 🔐 **User Authentication**
-- ❤️ **Favourite / Comparison Feature**
-- 🗺️ **Interactive Map View**
-- 📍 **Navigation to Institutions**
-- 🍜 **Search for Nearby Hawker Centres**
+-  **Comprehensive Search & Filtering**
+-  **User Authentication**
+-  **Favourite / Comparison Feature**
+-  **Interactive Map View**
+-  **Navigation to Institutions**
+-  **Search for Nearby Hawker Centres**
 
 ---
 
-## 🌐 Live Demo
+## 📌 Live Demo
 
 _Deployment link to be updated upon release._
 
 ---
 
-## 🛠️ Tech Stack
+## 📌 Tech Stack
 
 ### Frontend
 - React
@@ -54,16 +54,16 @@ _Deployment link to be updated upon release._
 
 ---
 
-## 🧩 Software Engineering Practices
+## 📌 Software Engineering Practices
 
-- ✅ **SCRUM** methodology
-- ✅ Emphasis on **Good Documentation**
-- ✅ **Reusable Components & Refactoring**
-- ✅ **Code Readability & Best Practices**
+-  **SCRUM** methodology
+-  Emphasis on **Good Documentation**
+-  **Reusable Components & Refactoring**
+-  **Code Readability & Best Practices**
 
 ---
 
-## 🧠 Design Patterns & Principles
+## 📌 Design Patterns & Principles
 
 - **Facade Pattern**: Centralized route and API access for future extensibility
 - **Singleton Pattern**: Efficient database connection management
@@ -84,7 +84,7 @@ _Deployment link to be updated upon release._
 
 ---
 
-## ✅ Traceability & Testing
+## 📌 Traceability & Testing
 
 - Use-case diagrams, class diagrams, and sequence diagrams for navigation features
 - Applied **white-box testing** for core functionality
@@ -92,7 +92,7 @@ _Deployment link to be updated upon release._
 
 ---
 
-## 📈 Results & Analysis
+## 📌 Results & Analysis
 
 - Achieved **99.99% success** in white-box test cases for core components
 - Demonstrated enhanced accessibility and user navigation efficiency
@@ -100,7 +100,7 @@ _Deployment link to be updated upon release._
 
 ---
 
-## 🔮 Future Plans
+## 📌 Future Plans
 
 - Expand comparison features
 - Enable advanced analytics and insights
@@ -108,22 +108,22 @@ _Deployment link to be updated upon release._
 
 ---
 
-## 🧾 License
+## 📌 License
 
 This project is licensed under the MIT License.
 
 ---
 
-## 🙌 Team 4 – SC2006 SCEA
+## 📌 Team 4 – SC2006 SCEA
 
-- Kee Chong Wei (IU2320846D)  
-- Lee Jian Han (IU2320966H)  
-- Tang Ying Jie (IU2322462K)  
-- Choudhary Nehal (IU2323793L)  
-- Venkatesh Arun Moorthy (IU2323092H)  
-- Dadi Venkat Rohit (IU2422319L)  
+- Kee Chong Wei (U2320846D)  
+- Lee Jian Han (U2320966H)  
+- Tang Ying Jie (U2322462K)  
+- Choudhary Nehal (U2323793L)  
+- Venkatesh Arun Moorthy (U2323092H)  
+- Dadi Venkat Rohit (U2422319L)  
 
 ---
 
-> 🔍 _“Crafting Robust Systems with Smart Design”_  
+>  _“Crafting Robust Systems with Smart Design”_  
 > _LearnLeap: Empowering educational choices across Singapore._
