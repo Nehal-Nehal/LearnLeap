@@ -15,7 +15,6 @@ export interface FilterOptionsData {
   distinctivePrograms: string[];
   moePrograms: string[];
   motherTongues: string[];
-  type: string[];
 }
 
 export const useInstitutions = () => {
@@ -50,7 +49,6 @@ export const useInstitutions = () => {
     distinctivePrograms: [],
     moePrograms: [],
     motherTongues: [],
-    type: []
   });
   
   // Fetch data from the API
