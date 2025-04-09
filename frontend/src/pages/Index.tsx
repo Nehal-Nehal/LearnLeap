@@ -117,10 +117,10 @@ const Index = () => {
                 <MapPin className="h-4 w-4" />
                 <span>Interactive Map</span>
               </TabsTrigger>
-              <TabsTrigger value="register" className="flex items-center gap-2">
+              {/* <TabsTrigger value="register" className="flex items-center gap-2">
                 <UserPlus className="h-4 w-4" />
                 <span>Registration</span>
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="compare" className="flex items-center gap-2">
                 <Scale className="h-4 w-4" />
                 <span>Compare</span>
@@ -291,7 +291,7 @@ const Index = () => {
               </div>
             </TabsContent>
             
-            {/* Registration tab content */}
+            {/* Registration tab content
             <TabsContent value="register" className="mt-0">
               <div className="bg-white/50 backdrop-blur-sm shadow-sm border border-border/40 rounded-xl p-6">
                 <h2 className="text-xl font-semibold mb-4">Institution Registration</h2>
@@ -389,7 +389,7 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="compare" className="mt-0">
               <div className="bg-white/50 backdrop-blur-sm shadow-sm border border-border/40 rounded-xl p-6">
                 <h2 className="text-xl font-semibold mb-4">Compare Favourited Institutions</h2>
