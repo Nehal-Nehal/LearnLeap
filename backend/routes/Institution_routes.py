@@ -26,4 +26,3 @@ def get_all_institutions():
             "message": f"Error retrieving institutions: {str(e)}",
             "data": None
         }), 500
-    
