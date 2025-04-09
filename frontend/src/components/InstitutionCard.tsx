@@ -12,7 +12,7 @@ interface InstitutionCardProps {
   onClick: () => void;
   onViewDetails: () => void;
   isFavourited?: boolean;
-  onToggleFavourite?: (institutionName: string, favourited: boolean) => void;
+  onToggleFavourite?: (institution: Institution, favourited: boolean) => void;
 }
 
 const InstitutionCard: React.FC<InstitutionCardProps> = ({
@@ -36,8 +36,8 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
         institution_name: institution.school_name // Changed from institution.name
       });
       if (onToggleFavourite) {
-        onToggleFavourite(institution.school_name, response.data.favourited); // Changed from institution.name
-      }
+        onToggleFavourite(institution, response.data.favourited);
+      }      
       alert(response.data.message);
     } catch (error: any) {
       console.error('Error toggling favourite:', error.response?.data || error.message);

@@ -56,3 +56,27 @@ def get_favourites():
 
     favourites = user.get('favourited_institutions', [])
     return jsonify({'favourites': favourites}), 200
+
+@user_bp.route('/favourite-details', methods=['GET'])
+def get_favourite_details():
+    username = request.args.get('username')
+    if not username:
+        return jsonify({'error': 'Username required'}), 400
+
+    user = mongo.db[User.COLLECTION].find_one({'username': username})
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    # Get the list of favourite institution names from the user document.
+    favourite_names = user.get('favourited_institutions', [])
+
+    # Query the institutions collection for full institution details.
+    institution_collection = mongo.db['Institution']  # Adjust this if your collection name is different.
+    favourite_institutions = list(institution_collection.find({"school_name": {"$in": favourite_names}}))
+    
+    # Convert ObjectId to string so JSON can serialize the document properly.
+    for inst in favourite_institutions:
+        inst['_id'] = str(inst['_id'])
+    
+    return jsonify({'favourites': favourite_institutions}), 200
+

@@ -15,6 +15,7 @@ export interface FilterOptionsData {
   distinctivePrograms: string[];
   moePrograms: string[];
   motherTongues: string[];
+  type?: string[];
 }
 
 export const useInstitutions = () => {
@@ -87,22 +88,7 @@ export const useInstitutions = () => {
         setFilterOptions(options);
         
         setError(null);
-      } 
-      // catch (err) {
-      //   console.error('Failed to fetch institutions:', err);
-      //   setError('Failed to load institutions. Please try again later.');
-        
-      //   import('./Data').then((dataModule) => {
-      //     setInstitutions(dataModule.institutions);
-          
-      //     const options = generateFilterOptions(dataModule.institutions);
-      //     setFilterOptions(options);
-          
-      //   }).catch((mockErr) => {
-      //     console.error('Failed to load mock data:', mockErr);
-      //   });
-      // } 
-      finally {
+      } finally {
         setIsLoading(false);
       }
     };

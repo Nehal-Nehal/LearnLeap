@@ -28,16 +28,20 @@ const Index = () => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [activeTab, setActiveTab] = useState("search");
-  const [favouritedInstitutions, setFavouritedInstitutions] = useState<string[]>([]);
+  const [favouritedInstitutions, setFavouritedInstitutions] = useState<Institution[]>([]);
   const [showOnlyFavourites, setShowOnlyFavourites] = useState(false);
   const username = localStorage.getItem("username");
 
+  // Fetch detailed favourites from new backend endpoint
   useEffect(() => {
     const fetchFavourites = async () => {
       if (!username) return;
   
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/api/users/get-favourites?username=${username}`);
+        const response = await axios.get(
+          `http://127.0.0.1:5000/api/users/favourite-details?username=${username}`
+        );
+        // Expect response.data.favourites to be an array of Institution objects.
         setFavouritedInstitutions(response.data.favourites || []);
       } catch (error) {
         console.error("Failed to load favourites:", error);
@@ -47,12 +51,22 @@ const Index = () => {
     fetchFavourites();
   }, [username]);
 
-  const handleToggleFavourite = (institutionName: string, favourited: boolean) => {
-    setFavouritedInstitutions((prev) =>
-      favourited
-        ? [...new Set([...prev, institutionName])]
-        : prev.filter((name) => name !== institutionName)
-    );
+  // When toggling a favourite, simply refresh the favourites list.
+  // Adjust the callback to expect an Institution object.
+  const handleToggleFavourite = (institution: Institution, favourited: boolean) => {
+    // Instead of manually updating state, re-fetch to ensure proper details.
+    const refreshFavourites = async () => {
+      if (!username) return;
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:5000/api/users/favourite-details?username=${username}`
+        );
+        setFavouritedInstitutions(response.data.favourites || []);
+      } catch (error) {
+        console.error("Failed to refresh favourites:", error);
+      }
+    };
+    refreshFavourites();
   };
   
 
@@ -232,7 +246,7 @@ const Index = () => {
                             isSelected={selectedInstitution?.id === institution.id}
                             onClick={() => handleCardClick(institution)}
                             onViewDetails={() => handleViewDetails(institution)}
-                            isFavourited={favouritedInstitutions.includes(institution.school_name)}
+                            isFavourited={favouritedInstitutions.some(fav => fav.school_name === institution.school_name)}
                             onToggleFavourite={handleToggleFavourite} // ✅ new
                           />
                         ))}
@@ -264,7 +278,7 @@ const Index = () => {
                   <Map 
                     institutions={
                       showOnlyFavourites
-                        ? institutions.filter((inst) => favouritedInstitutions.includes(inst.school_name))
+                        ? institutions.filter((inst) => favouritedInstitutions.some(fav => fav.school_name === inst.school_name))
                         : institutions
                     }
                     selectedInstitution={selectedInstitution}
@@ -379,12 +393,14 @@ const Index = () => {
             <TabsContent value="compare" className="mt-0">
               <div className="bg-white/50 backdrop-blur-sm shadow-sm border border-border/40 rounded-xl p-6">
                 <h2 className="text-xl font-semibold mb-4">Compare Favourited Institutions</h2>
-
                 {favouritedInstitutions.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">You have not favourited any institutions yet.</p>
+                  <p className="text-sm text-muted-foreground">
+                    You have not favourited any institutions yet.
+                  </p>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left border-collapse">
+                      {/* Only one header section */}
                       <thead className="bg-muted/50 text-muted-foreground">
                         <tr>
                           <th className="px-4 py-2 border">Name</th>
@@ -395,37 +411,41 @@ const Index = () => {
                           <th className="px-4 py-2 border">Special Programs</th>
                         </tr>
                       </thead>
+                      {/* Only one body section */}
                       <tbody>
-                        {institutions
-                          .filter((inst) => favouritedInstitutions.includes(inst.school_name))
-                          .map((inst) => (
-                            <tr key={inst.id} className="border-t">
-                              <td className="px-4 py-2 border font-medium">{inst.school_name}</td>
-                              <td className="px-4 py-2 border">{inst.school_type}</td>
-                              <td className="px-4 py-2 border">
-                                {inst.address}, S({inst.postal_code})
-                              </td>
-                              <td className="px-4 py-2 border">
-                                {inst.subjects?.length > 0
-                                  ? inst.subjects.slice(0, 3).join(", ") + (inst.subjects.length > 3 ? "..." : "")
-                                  : "N/A"}
-                              </td>
-                              <td className="px-4 py-2 border">
-                                {inst.CCA?.length > 0
-                                  ? inst.CCA.slice(0, 3).join(", ") + (inst.CCA.length > 3 ? "..." : "")
-                                  : "N/A"}
-                              </td>
-                              <td className="px-4 py-2 border">
-                                {[...(inst.school_distinctive_programmes || []), ...(inst.MOE_programmes || [])]
-                                  .slice(0, 3)
-                                  .join(", ") + (
-                                    (inst.school_distinctive_programmes?.length || 0) + (inst.MOE_programmes?.length || 0) > 3
-                                      ? "..."
-                                      : ""
-                                  ) || "N/A"}
-                              </td>
-                            </tr>
-                          ))}
+                        {favouritedInstitutions.map((inst) => (
+                          <tr key={inst.id || inst._id} className="border-t">
+                            <td className="px-4 py-2 border font-medium">{inst.school_name}</td>
+                            <td className="px-4 py-2 border">{inst.school_type}</td>
+                            <td className="px-4 py-2 border">
+                              {inst.address}, S({inst.postal_code})
+                            </td>
+                            <td className="px-4 py-2 border">
+                              {inst.subjects && inst.subjects.length > 0
+                                ? inst.subjects.slice(0, 3).join(", ") +
+                                  (inst.subjects.length > 3 ? "..." : "")
+                                : "N/A"}
+                            </td>
+                            <td className="px-4 py-2 border">
+                              {inst.CCA && inst.CCA.length > 0
+                                ? inst.CCA.slice(0, 3).join(", ") +
+                                  (inst.CCA.length > 3 ? "..." : "")
+                                : "N/A"}
+                            </td>
+                            <td className="px-4 py-2 border">
+                              {[
+                                ...(inst.school_distinctive_programmes || []),
+                                ...(inst.MOE_programmes || [])
+                              ]
+                                .slice(0, 3)
+                                .join(", ") +
+                                (((inst.school_distinctive_programmes?.length || 0) +
+                                  (inst.MOE_programmes?.length || 0)) > 3
+                                  ? "..."
+                                  : "") || "N/A"}
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
