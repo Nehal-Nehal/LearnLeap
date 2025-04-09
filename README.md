@@ -3,9 +3,6 @@
 
 LearnLeap is a comprehensive search system for educational institutions in Singapore, designed to help students and parents discover schools, colleges, and universities that meet their specific requirements.
 
-## Live Demo
-
-You can access the live demo of the project at [LearnLeap App](https://learnleap-app.web.app) (Note: This link is a placeholder and needs to be updated when deployed).
 
 ## Features
 
@@ -45,7 +42,6 @@ This project is organized into two main directories:
 - Node.js (v16 or later)
 - Python 3.8+
 - MongoDB account
-- Firebase project with authentication enabled
 
 ### Frontend Setup
 
@@ -82,15 +78,6 @@ python import_data.py
 # Start the API server
 python app.py
 ```
-
-## Firebase Configuration
-
-1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com/)
-2. Enable Google Authentication in the Authentication section
-3. Copy your Firebase configuration from Project Settings
-4. Update the `firebaseConfig` object in `src/lib/firebase.ts` with your own Firebase project details
-5. For backend auth verification, generate a new private key for your service account and save it as `firebase-credentials.json` in the backend directory
-
 ## MongoDB Configuration
 
 1. Create a MongoDB Atlas account and set up a new cluster
@@ -103,41 +90,6 @@ python app.py
 - `MONGODB_URI`: MongoDB connection string
 - `PORT`: (Optional) Port for the Flask server (default: 5000)
 
-## API Endpoints
-
-The backend provides the following API endpoints:
-
-- `GET /api/institutions`: Get a list of all institutions, with optional filtering
-- `GET /api/institutions/:id`: Get details of a specific institution
-- `POST /api/users/register`: Register a new user
-- `GET /api/users/profile`: Get the profile of the authenticated user
-
-## Deployment
-
-### Frontend
-The frontend can be deployed to Firebase Hosting:
-
-```sh
-npm run build
-firebase deploy --only hosting
-```
-
-### Backend
-The backend can be deployed to a platform like Heroku, Google Cloud Run, or AWS:
-
-```sh
-# Example for Heroku
-heroku create
-git push heroku main
-```
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgements
 
