@@ -87,24 +87,22 @@ export const useInstitutions = () => {
         setFilterOptions(options);
         
         setError(null);
-      } catch (err) {
-        console.error('Failed to fetch institutions:', err);
-        setError('Failed to load institutions. Please try again later.');
+      } 
+      // catch (err) {
+      //   console.error('Failed to fetch institutions:', err);
+      //   setError('Failed to load institutions. Please try again later.');
         
-        // Fallback to mock data in case API fails
-        import('./mockData').then((mockModule) => {
-          console.log('Falling back to mock data...');
-          setInstitutions(mockModule.institutions);
+      //   import('./Data').then((dataModule) => {
+      //     setInstitutions(dataModule.institutions);
           
-          // Generate filter options from the fallback mock data
-          const options = generateFilterOptions(mockModule.institutions);
-          setFilterOptions(options);
+      //     const options = generateFilterOptions(dataModule.institutions);
+      //     setFilterOptions(options);
           
-          setError('Using mock data (API unavailable)');
-        }).catch((mockErr) => {
-          console.error('Failed to load mock data:', mockErr);
-        });
-      } finally {
+      //   }).catch((mockErr) => {
+      //     console.error('Failed to load mock data:', mockErr);
+      //   });
+      // } 
+      finally {
         setIsLoading(false);
       }
     };
