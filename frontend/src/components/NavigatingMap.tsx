@@ -103,7 +103,7 @@ const NavigatingMap: React.FC<NavigatingMapProps> = ({
   const [hawkerRadius, setHawkerRadius] = useState<number>(1.0);
   const [showingHawkers, setShowingHawkers] = useState(false);
   const [hawkerMarkers, setHawkerMarkers] = useState<google.maps.Marker[]>([]);
-  const apiKey = ''; // Consider moving this to env variable
+  const apiKey = 'AIzaSyByQ0_LHlYRlS_WBW8C7uq4fiGZfkuGPZQ'; // Consider moving this to env variable
 
   // Initialize the map when component mounts
   useEffect(() => {
