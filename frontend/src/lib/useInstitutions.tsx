@@ -15,7 +15,7 @@ export interface FilterOptionsData {
   distinctivePrograms: string[];
   moePrograms: string[];
   motherTongues: string[];
-  type?: string[];
+  type: string[];
 }
 
 export const useInstitutions = () => {
@@ -49,7 +49,8 @@ export const useInstitutions = () => {
     ccas: [],
     distinctivePrograms: [],
     moePrograms: [],
-    motherTongues: []
+    motherTongues: [],
+    type: []
   });
   
   // Fetch data from the API

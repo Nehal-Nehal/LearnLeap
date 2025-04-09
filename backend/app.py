@@ -23,7 +23,6 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-# CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}}, supports_credentials=True)
 
 # MongoDB connection
 username = os.environ.get("MONGO_USERNAME")
@@ -54,43 +53,6 @@ app.register_blueprint(user_bp)
 institutions_collection = db.institutions
 users_collection = db.users
 hawker_collection = db.hawker_centres
-
-@app.route("/api/institutions", methods=["GET"])
-def get_institutions():
-    query = {}
-    
-    # Parse query parameters
-    institution_type = request.args.get('type')
-    search_query = request.args.get('query')
-    
-    if institution_type:
-        query['type'] = institution_type
-    
-    if search_query:
-        query['$or'] = [
-            {'name': {'$regex': search_query, '$options': 'i'}},
-            {'description': {'$regex': search_query, '$options': 'i'}}
-        ]
-    
-    # Convert MongoDB cursor to list of dictionaries
-    institutions = list(institutions_collection.find(query))
-    
-    # Convert ObjectId to string
-    for institution in institutions:
-        institution['_id'] = str(institution['_id'])
-    
-    return jsonify(institutions)
-
-@app.route("/api/institutions/<institution_id>", methods=["GET"])
-def get_institution(institution_id):
-    try:
-        institution = institutions_collection.find_one({"_id": ObjectId(institution_id)})
-        if institution:
-            institution['_id'] = str(institution['_id'])
-            return jsonify(institution)
-        return jsonify({"error": "Institution not found"}), 404
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

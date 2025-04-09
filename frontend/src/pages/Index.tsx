@@ -145,7 +145,7 @@ const Index = () => {
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         className="flex flex-col items-center justify-center p-3 rounded-lg bg-white border border-border/50 hover:border-primary/50 transition-colors"
-                        onClick={() => updateFilters({ type: ['University'] })}
+                        onClick={() => updateFilters({ school_type: ['University'] })}
                       >
                         <Building className="h-5 w-5 text-primary mb-1" />
                         <span className="text-xs">Universities</span>
@@ -153,7 +153,7 @@ const Index = () => {
                       
                       <button
                         className="flex flex-col items-center justify-center p-3 rounded-lg bg-white border border-border/50 hover:border-primary/50 transition-colors"
-                        onClick={() => updateFilters({ type: ['Junior College'] })}
+                        onClick={() => updateFilters({ school_type: ['Junior College'] })}
                       >
                         <School className="h-5 w-5 text-primary mb-1" />
                         <span className="text-xs">Junior Colleges</span>
@@ -161,7 +161,7 @@ const Index = () => {
                       
                       <button
                         className="flex flex-col items-center justify-center p-3 rounded-lg bg-white border border-border/50 hover:border-primary/50 transition-colors"
-                        onClick={() => updateFilters({ type: ['School'] })}
+                        onClick={() => updateFilters({ school_type: ['School'] })}
                       >
                         <FileText className="h-5 w-5 text-primary mb-1" />
                         <span className="text-xs">Schools</span>
@@ -414,7 +414,7 @@ const Index = () => {
                       {/* Only one body section */}
                       <tbody>
                         {favouritedInstitutions.map((inst) => (
-                          <tr key={inst.id || inst._id} className="border-t">
+                          <tr key={inst.id} className="border-t">
                             <td className="px-4 py-2 border font-medium">{inst.school_name}</td>
                             <td className="px-4 py-2 border">{inst.school_type}</td>
                             <td className="px-4 py-2 border">

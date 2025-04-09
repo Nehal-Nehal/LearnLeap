@@ -14,5 +14,3 @@ def getLoc():
     except PermissionError:
         print("ERROR: You need to allow applications to access you location in Windows settings")
 
-
-print(getLoc())
