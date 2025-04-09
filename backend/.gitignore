@@ -1,4 +1,5 @@
 venv/
+routes/__pycache__/
 
 # Logs
 logs
