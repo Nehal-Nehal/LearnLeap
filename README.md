@@ -1,146 +1,129 @@
+ # 🎓 LearnLeap – Educational Institution Search System
 
-# LearnLeap - Educational Institution Search System
+**LearnLeap** is a user-friendly web platform that enables students and parents in Singapore to search, compare, and navigate educational institutions. It consolidates fragmented information and leverages open data and filtering for personalized discovery.
 
-LearnLeap is a comprehensive search system for educational institutions in Singapore, designed to help students and parents discover schools, colleges, and universities that meet their specific requirements.
+📍 Developed as part of SC2006 Software Engineering and Architecture by Team 4  
+🔗 [GitHub Repository](https://github.com/softwarelab3/2006-SCEA-I4)
 
-## Live Demo
+---
 
-You can access the live demo of the project at [LearnLeap App](https://learnleap-app.web.app) (Note: This link is a placeholder and needs to be updated when deployed).
+## 📌 Problem Statement
 
-## Features
+Educational institution information in Singapore is fragmented, and many institutional websites vary in clarity and accessibility. This makes it difficult for users to make informed choices.
 
-- **Institution Search**: Find educational institutions based on various criteria
-- **Interactive Map**: View institution locations and calculate distances from your location
-- **User Authentication**: Sign in with Google for a personalized experience
-- **Institution Registration**: Form for educational institutions to register
-- **Comprehensive Database**: Information on universities, polytechnics, junior colleges, secondary and primary schools
-- **Data Integration**: Uses data.gov.sg API to fetch educational institution data
+---
 
-## Project Structure
+## 💡 Our Solution
 
-This project is organized into two main directories:
-- `/frontend` - React.js application
-- `/backend` - Python API with MongoDB integration
+LearnLeap centralizes school, college, and university data in a single platform. It enhances accessibility and transparency by integrating open datasets and modern UX features, helping users filter institutions and access key details with ease.
 
-## Technologies Used
+---
 
-### Frontend
-- React with TypeScript
-- Vite for building
-- Tailwind CSS for styling
-- shadcn/ui for UI components
-- Firebase Authentication for Google Sign-in
-- React Router for navigation
-- React Query for data fetching
+## ✨ Key Features
 
-### Backend
-- Python Flask for API
-- MongoDB for database storage
-- Firebase Admin SDK for authentication verification
-- Integration with data.gov.sg API
+- 🔍 **Comprehensive Search & Filtering**
+- 🔐 **User Authentication**
+- ❤️ **Favourite / Comparison Feature**
+- 🗺️ **Interactive Map View**
+- 📍 **Navigation to Institutions**
+- 🍜 **Search for Nearby Hawker Centres**
 
-## Getting Started
+---
 
-### Prerequisites
-- Node.js (v16 or later)
-- Python 3.8+
-- MongoDB account
-- Firebase project with authentication enabled
+## 🌐 Live Demo
 
-### Frontend Setup
+_Deployment link to be updated upon release._
 
-```sh
-# Install dependencies
-npm install
+---
 
-# Start the development server
-npm run dev
-```
-
-### Backend Setup
-
-```sh
-# Navigate to the backend directory
-cd backend
-
-# Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set MongoDB connection string environment variable
-# On Unix/Linux/Mac:
-export MONGODB_URI="your_mongodb_connection_string"
-# On Windows:
-set MONGODB_URI="your_mongodb_connection_string"
-
-# Run the data import script (fetches data from data.gov.sg)
-python import_data.py
-
-# Start the API server
-python app.py
-```
-
-## Firebase Configuration
-
-1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com/)
-2. Enable Google Authentication in the Authentication section
-3. Copy your Firebase configuration from Project Settings
-4. Update the `firebaseConfig` object in `src/lib/firebase.ts` with your own Firebase project details
-5. For backend auth verification, generate a new private key for your service account and save it as `firebase-credentials.json` in the backend directory
-
-## MongoDB Configuration
-
-1. Create a MongoDB Atlas account and set up a new cluster
-2. Create a database named "learnleap"
-3. Set up the connection string as an environment variable for the backend
-
-## Environment Variables
-
-### Backend
-- `MONGODB_URI`: MongoDB connection string
-- `PORT`: (Optional) Port for the Flask server (default: 5000)
-
-## API Endpoints
-
-The backend provides the following API endpoints:
-
-- `GET /api/institutions`: Get a list of all institutions, with optional filtering
-- `GET /api/institutions/:id`: Get details of a specific institution
-- `POST /api/users/register`: Register a new user
-- `GET /api/users/profile`: Get the profile of the authenticated user
-
-## Deployment
+## 🛠️ Tech Stack
 
 ### Frontend
-The frontend can be deployed to Firebase Hosting:
-
-```sh
-npm run build
-firebase deploy --only hosting
-```
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Firebase Authentication
+- Google Maps API
 
 ### Backend
-The backend can be deployed to a platform like Heroku, Google Cloud Run, or AWS:
+- Python Flask
+- MongoDB
+- data.gov.sg API
+- Firebase Admin SDK
 
-```sh
-# Example for Heroku
-heroku create
-git push heroku main
-```
+---
 
-## Contributing
+## 🧩 Software Engineering Practices
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- ✅ **SCRUM** methodology
+- ✅ Emphasis on **Good Documentation**
+- ✅ **Reusable Components & Refactoring**
+- ✅ **Code Readability & Best Practices**
 
-## License
+---
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🧠 Design Patterns & Principles
 
-## Acknowledgements
+- **Facade Pattern**: Centralized route and API access for future extensibility
+- **Singleton Pattern**: Efficient database connection management
+- **SOLID Principles**:
+  - SRP (Single Responsibility Principle)
+  - OCP (Open-Closed Principle)
+  - DIP (Dependency Inversion Principle)
+  - ISP (Interface Segregation Principle)
 
-- Data provided by [data.gov.sg](https://data.gov.sg)
-- Icons from [Lucide Icons](https://lucide.dev/)
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
+> Applied in both backend architecture and frontend component design (e.g., `InstitutionCard`, `FilterSection`).
+
+---
+
+## 🔗 External APIs Used
+
+- [data.gov.sg API](https://data.gov.sg)
+- [Google Maps API](https://developers.google.com/maps)
+
+---
+
+## ✅ Traceability & Testing
+
+- Use-case diagrams, class diagrams, and sequence diagrams for navigation features
+- Applied **white-box testing** for core functionality
+- Emphasis on **Separation of Concerns** between UI and data logic (e.g., `NavigatingMap` interacts with `APIService` only)
+
+---
+
+## 📈 Results & Analysis
+
+- Achieved **99.99% success** in white-box test cases for core components
+- Demonstrated enhanced accessibility and user navigation efficiency
+- Visualization of institutional data facilitates better decision-making for users
+
+---
+
+## 🔮 Future Plans
+
+- Expand comparison features
+- Enable advanced analytics and insights
+- Integrate with more public APIs for enriched user experience
+
+---
+
+## 🧾 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 🙌 Team 4 – SC2006 SCEA
+
+- Kee Chong Wei (IU2320846D)  
+- Lee Jian Han (IU2320966H)  
+- Tang Ying Jie (IU2322462K)  
+- Choudhary Nehal (IU2323793L)  
+- Venkatesh Arun Moorthy (IU2323092H)  
+- Dadi Venkat Rohit (IU2422319L)  
+
+---
+
+> 🔍 _“Crafting Robust Systems with Smart Design”_  
+> _LearnLeap: Empowering educational choices across Singapore._
